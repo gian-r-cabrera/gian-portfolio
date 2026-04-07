@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+:root {
+  --page: #f4efe7;
+  --surface: #fff9f1;
+  --surface-raised: #f1e7d8;
+  --surface-panel: rgba(255, 255, 255, 0.82);
+  --surface-panel-soft: rgba(255, 255, 255, 0.72);
+  --surface-panel-strong: rgba(255, 255, 255, 0.92);
+  --ink-strong: #163730;
+  --ink-soft: #274843;
+  --ink-muted: #616a61;
+  --line: rgba(28, 56, 50, 0.16);
+  --line-strong: rgba(24, 71, 62, 0.28);
+  --accent: #1b6e61;
+  --accent-soft-text: #d6f2ea;
+  --warm: #ba6f4d;
+  --button-primary-bg: #163730;
+  --button-primary-hover: #1b6e61;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #ffffff;
+  --button-secondary-text: #163730;
+  --shadow-soft: 0 26px 70px rgba(32, 24, 16, 0.08);
+  --font-body: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-heading: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", "Consolas", monospace;
+  color: var(--ink-soft);
+  background: var(--page);
+  font: 16px/1.6 var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --page: #111614;
+  --surface: #16201d;
+  --surface-raised: #1d2a26;
+  --surface-panel: rgba(23, 32, 29, 0.88);
+  --surface-panel-soft: rgba(29, 42, 38, 0.9);
+  --surface-panel-strong: rgba(24, 35, 31, 0.94);
+  --ink-strong: #eef5f1;
+  --ink-soft: #d8e5df;
+  --ink-muted: #94a9a0;
+  --line: rgba(200, 224, 214, 0.12);
+  --line-strong: rgba(200, 224, 214, 0.22);
+  --accent: #6fd2bb;
+  --accent-soft-text: #d7fff5;
+  --warm: #d49977;
+  --button-primary-bg: #6fd2bb;
+  --button-primary-hover: #8ae0cc;
+  --button-primary-text: #0f1513;
+  --button-secondary-bg: #1d2a26;
+  --button-secondary-text: #eef5f1;
+  --shadow-soft: 0 26px 70px rgba(0, 0, 0, 0.28);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(27, 110, 97, 0.13), transparent 32%),
+    radial-gradient(circle at 90% 12%, rgba(186, 111, 77, 0.14), transparent 26%),
+    linear-gradient(180deg, #f7f2ea 0%, #f4efe7 52%, #efe5d8 100%);
+  color: var(--ink-soft);
+}
+
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at top left, rgba(111, 210, 187, 0.12), transparent 30%),
+    radial-gradient(circle at 90% 12%, rgba(212, 153, 119, 0.1), transparent 24%),
+    linear-gradient(180deg, #0f1513 0%, #111614 52%, #151d1a 100%);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(22, 55, 48, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 55, 48, 0.04) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent 70%);
+}
+
+:root[data-theme='dark'] body::before {
+  background-image:
+    linear-gradient(rgba(216, 229, 223, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(216, 229, 223, 0.03) 1px, transparent 1px);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  color: var(--ink-strong);
+}
+
+::selection {
+  color: white;
+  background: var(--accent);
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.section-shell {
+  scroll-margin-top: 7.5rem;
+  animation: section-enter 0.75s ease both;
+}
+
+section + section.section-shell {
+  margin-top: 0.25rem;
+}
+
+.motion-card {
+  animation: float-card 8s ease-in-out infinite;
+}
+
+@keyframes section-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-card {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .section-shell,
+  .motion-card {
+    animation: none;
+  }
+}
