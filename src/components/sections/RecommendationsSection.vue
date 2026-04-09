@@ -15,24 +15,21 @@ defineProps({
           Recommendations
         </p>
         <h2 class="mt-3 text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          Placeholder endorsements you can replace with real testimonials.
+          Endorsements from collaborators and mentors.
         </h2>
       </div>
-      <p class="max-w-md text-base leading-7 text-[var(--ink-soft)]">
-        Add short quotes from teammates, mentors, managers, or professors. One strong sentence is usually enough.
-      </p>
     </div>
 
-    <div class="grid gap-5 lg:grid-cols-3">
+    <div class="grid gap-5">
       <article
         v-for="item in recommendations"
         :key="`${item.name}-${item.role}`"
         class="rounded-[1.6rem] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_16px_38px_rgba(32,24,16,0.05)]"
       >
-        <p class="text-base leading-8 text-[var(--ink-soft)]">
+        <p class="text-lg leading-8 text-[var(--ink-soft)]">
           "{{ item.quote }}"
         </p>
-        <div class="mt-6 border-t border-[rgba(24,71,62,0.08)] pt-4">
+        <div class="mt-6 border-t border-[var(--line)] pt-4">
           <p class="text-base font-semibold text-[var(--ink-strong)]">
             {{ item.name }}
           </p>

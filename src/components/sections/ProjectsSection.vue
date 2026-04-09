@@ -26,20 +26,16 @@ const projectLinks = (project) => {
 </script>
 
 <template>
-  <section id="projects" class="section-shell space-y-8 pt-6">
+  <section id="projects" class="section-shell space-y-10 pt-6">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div class="max-w-3xl space-y-3">
         <p class="text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">
           Selected Work
         </p>
         <h2 class="text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          Work shaped around analytics, monitoring, and decision support.
+          Analytics, monitoring, and decision-support interfaces.
         </h2>
       </div>
-
-      <p class="max-w-xl text-base leading-7 text-[var(--ink-soft)]">
-        The strongest examples here are the ones where dense research or surveillance data had to become something people could scan, trust, and use quickly.
-      </p>
     </div>
 
     <article
@@ -129,10 +125,10 @@ const projectLinks = (project) => {
     <div class="flex items-center justify-between pt-2">
       <div>
         <p class="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">
-          More Projects
+          Additional Work
         </p>
         <p class="mt-2 text-base text-[var(--ink-soft)]">
-          Additional work focused on monitoring, reporting, and analytics UX.
+          Dashboards, reporting, and event websites.
         </p>
       </div>
     </div>
@@ -158,15 +154,6 @@ const projectLinks = (project) => {
           </p>
           <p class="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
             {{ project.resultLabel }}
-          </p>
-        </div>
-
-        <div class="mt-5">
-          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">
-            Contribution
-          </p>
-          <p class="mt-2 text-base leading-7 text-[var(--ink-soft)]">
-            {{ project.contribution }}
           </p>
         </div>
 
@@ -205,7 +192,7 @@ const projectLinks = (project) => {
             v-if="!projectLinks(project).length"
             class="inline-flex items-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2.5 text-sm text-[var(--ink-muted)]"
           >
-            Internal or private work
+            Private project
           </span>
         </div>
       </article>

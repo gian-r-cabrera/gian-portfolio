@@ -40,22 +40,11 @@ defineProps({
         >
           {{ contact.primaryCta.label }}
         </a>
-
-        <a
-          :href="contact.secondaryCta.url"
-          class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-6 py-3.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-          style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
-        >
-          {{ contact.secondaryCta.label }}
-        </a>
       </div>
 
       <div class="flex flex-wrap gap-3">
         <span class="rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2 text-sm text-[var(--ink-soft)]">
           {{ profile.location }}
-        </span>
-        <span class="rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2 text-sm text-[var(--ink-soft)]">
-          {{ profile.currentRole }}
         </span>
       </div>
     </div>

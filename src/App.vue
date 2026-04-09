@@ -41,6 +41,16 @@ onMounted(() => {
   const savedTheme = window.localStorage.getItem('portfolio-theme')
   const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   applyTheme(savedTheme || (preferredDark ? 'dark' : 'light'))
+
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual'
+  }
+
+  if (!window.location.hash) {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    })
+  }
 })
 
 watch(theme, (value) => {
@@ -75,7 +85,7 @@ watch(theme, (value) => {
 
     <footer class="px-4 pb-4 text-center text-sm text-[var(--ink-muted)] sm:px-6 lg:px-10">
       <p>
-        {{ year }} Gian Cabrera. Built with Vue and a content model that can expand into deeper project pages later.
+        {{ year }} Gian Cabrera. Built with Vue, crafted for public health dashboards and reporting workflows.
       </p>
     </footer>
   </div>

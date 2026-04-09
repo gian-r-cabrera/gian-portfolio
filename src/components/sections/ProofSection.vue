@@ -18,7 +18,7 @@ defineProps({
           Proof points that support credibility beyond the project grid.
         </h2>
         <p class="mt-4 max-w-2xl text-base leading-7 text-[var(--ink-soft)]">
-          Awards, published work, and organization roles help show academic performance, domain exposure, and professional involvement.
+          Awards, conference abstracts, and organization roles help show academic performance, domain exposure, and professional involvement.
         </p>
       </div>
 
@@ -78,14 +78,6 @@ defineProps({
         </a>
       </div>
 
-      <div class="mt-6 rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-raised)] p-4 text-[var(--ink-strong)]">
-        <p class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
-          Suggested Additions
-        </p>
-        <p class="mt-2 text-sm leading-7 text-[var(--ink-muted)]">
-          Add portfolio domain, publication page, or a direct resume file link here if you want this column to feel more complete.
-        </p>
-      </div>
     </aside>
   </section>
 </template>
