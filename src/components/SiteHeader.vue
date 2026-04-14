@@ -22,9 +22,9 @@ defineEmits(['toggle-theme'])
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 px-4 pt-4 sm:px-6 lg:px-10">
+  <header class="fixed inset-x-0 top-3 z-50 px-4 sm:px-6 lg:px-10">
     <div
-      class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-3 shadow-[0_20px_45px_rgba(32,24,16,0.08)] backdrop-blur md:px-6"
+      class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-3 shadow-[0_24px_50px_rgba(32,24,16,0.12)] backdrop-blur md:px-6"
     >
       <a href="#top" class="flex items-center gap-3">
         <span class="flex h-11 w-11 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-raised)]">

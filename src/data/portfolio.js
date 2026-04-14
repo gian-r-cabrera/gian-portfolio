@@ -8,17 +8,17 @@ export const navigation = [
 export const profile = {
   name: 'Gian Cabrera',
   shortName: 'GC',
-  title: 'Frontend Developer for Public Health Dashboards',
-  kicker: 'Public health dashboards, reporting interfaces, and decision-support systems',
+  title: 'Frontend Developer for Public Health Analytics and Reporting',
+  kicker: 'Public health dashboards, surveillance workflows, and decision-support systems',
   photo: {
     src: '/DP_PORTFOLIO.PNG',
     alt: 'Portrait of Gian Cabrera',
     caption: 'Frontend developer focused on public health dashboards and analytics products.',
   },
   intro:
-    'I build interfaces that turn surveillance data and reporting workflows into usable products.',
+    'I build interfaces that turn surveillance data, workflow inputs, and reporting tasks into usable products.',
   credibility:
-    'Focused on public health analytics, disease monitoring, and data-heavy systems that need clarity.',
+    'Focused on public health analytics, disease monitoring, and data-heavy systems that need clarity and trust.',
   location: 'Davao City, Philippines',
   currentRole: 'Computer Programmer I at the Mindanao Center for Disease Watch and Analytics',
   availability: 'Open to software engineering, analytics, and dashboard-focused roles.',
@@ -96,9 +96,13 @@ export const projects = [
   {
     title: 'RabDash DC Mobile',
     slug: 'rabdash-dc-mobile-application',
+    typeLabel: 'Mobile App',
     role: 'Full Stack · Student Intern',
+    audience: 'Public and private veterinarians',
     context:
       'A mobile version of RabDash DC for public and private veterinarians in Davao City.',
+    scope: 'Rabies case reporting',
+    surface: 'Field submission workflow',
     summary:
       'Built to help researchers and veterinary partners record and upload rabies vaccination cases throughout Davao city in one mobile platform.',
     contribution:
@@ -109,7 +113,8 @@ export const projects = [
     stack: ['React Native', 'Mobile Application', 'JavaScript', 'Public Health Analytics'],
     featured: true,
     primary: true,
-    featuredImage: null,
+    featuredImage: '/project-screenshot-placeholder.svg',
+    featuredImageAlt: 'Placeholder project screenshot for RabDash DC Mobile',
     liveUrl: '',
     repoUrl: 'https://github.com/GianSolo-aok/Rabdash_Mobile',
     caseStudyUrl: '',
@@ -117,9 +122,13 @@ export const projects = [
   {
     title: 'IWOMB 2025 Website',
     slug: 'iwomb-2025-website',
+    typeLabel: 'Event Website',
     role: 'Full Stack · Website Build',
+    audience: 'Workshop attendees and organizers',
     context:
       'Website for the 2025 International Workshop on Mathematical Biology in Coron, Palawan.',
+    scope: 'Programme and applications',
+    surface: 'Conference information hub',
     summary:
       'Built a public event website for IWOMB 2025 to centralize workshop information, programme details, speakers, venue, workshops, committees, and application access.',
     contribution:
@@ -138,9 +147,13 @@ export const projects = [
   {
     title: 'DiWA Disease Trends Dashboard',
     slug: 'infectious-disease-trends-dashboard',
+    typeLabel: 'Dashboard + Reporting',
     role: 'Full Stack · Dashboard and Reporting Workflow',
+    audience: 'Public health reporting teams',
     context:
       'Disease surveillance dashboard with hybrid templated and AI-assisted reporting support.',
+    scope: 'Trend review and report generation',
+    surface: 'Hybrid workflow module',
     summary:
       'Built the DiWA dashboard and reporting workflow, including trend views, hybrid report generation, and backend support for the module.',
     contribution:
@@ -159,9 +172,13 @@ export const projects = [
   {
     title: 'RabDash DC Chart Maintenance',
     slug: 'rabdash-dc-chart-maintenance',
+    typeLabel: 'Chart Maintenance',
     role: 'Frontend · Chart Updates',
+    audience: 'Research and surveillance users',
     context:
       'Ongoing chart maintenance and visual updates for the RabDash DC website.',
+    scope: 'Live chart updates',
+    surface: 'Dashboard visual upkeep',
     summary:
       'Maintained and updated the RabDash DC charts so research and surveillance visuals stayed current and readable.',
     contribution:
@@ -242,13 +259,13 @@ export const skills = [
 ]
 
 export const about = {
-  title: 'I build software for teams that need clarity from complex data.',
+  title: 'I build software for teams that need clarity from public health data.',
   paragraphs: [
     'The work I care about most sits at the intersection of software, analytics, and public impact. I want monitoring systems to feel readable, dependable, and useful under real operating conditions.',
-    'That usually means turning noisy or fragmented datasets into a smaller set of views that help stakeholders answer the real question faster. My bias is toward useful systems, not decorative complexity.',
+    'That usually means turning noisy or fragmented health datasets into a smaller set of views that help stakeholders answer the real question faster. My bias is toward useful systems, not decorative complexity.',
   ],
   differentiators: [
-    'Comfortable in data-heavy, domain-specific products',
+    'Comfortable in public health, data-heavy products',
     'Strong fit for dashboards, KPI views, and reporting interfaces',
     'Most effective where UX clarity directly supports better decisions',
   ],

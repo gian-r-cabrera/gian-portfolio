@@ -18,8 +18,8 @@ const secondaryProjects = computed(() =>
 
 const projectLinks = (project) => {
   return [
-    project.liveUrl ? { label: 'Live product', url: project.liveUrl } : null,
-    project.repoUrl ? { label: 'Source', url: project.repoUrl } : null,
+    project.liveUrl ? { label: 'Live site', url: project.liveUrl } : null,
+    project.repoUrl ? { label: 'Source code', url: project.repoUrl } : null,
     project.caseStudyUrl ? { label: 'Case study', url: project.caseStudyUrl } : null,
   ].filter(Boolean)
 }
@@ -33,7 +33,7 @@ const projectLinks = (project) => {
           Selected Work
         </p>
         <h2 class="text-3xl leading-tight font-semibold tracking-[-0.03em] text-[var(--ink-strong)] sm:text-4xl">
-          Analytics, monitoring, and decision-support interfaces.
+          Public health analytics, surveillance, and decision-support interfaces.
         </h2>
       </div>
     </div>
@@ -49,6 +49,9 @@ const projectLinks = (project) => {
             style="background: var(--button-primary-bg); color: var(--button-primary-text);"
           >
             Featured Project
+          </span>
+          <span class="rounded-full border border-[var(--line)] bg-[var(--surface-panel)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">
+            {{ primaryProject.typeLabel }}
           </span>
           <span class="text-sm font-medium text-[var(--ink-muted)]">
             {{ primaryProject.role }}
@@ -66,6 +69,17 @@ const projectLinks = (project) => {
             {{ primaryProject.resultLabel }}
           </p>
         </div>
+
+        <figure class="overflow-hidden rounded-[1.35rem] border border-[var(--line)] bg-[var(--surface-panel-soft)]">
+          <img
+            :src="primaryProject.featuredImage || '/project-screenshot-placeholder.svg'"
+            :alt="primaryProject.featuredImageAlt || `${primaryProject.title} screenshot placeholder`"
+            class="aspect-[16/10] w-full object-cover"
+          />
+          <figcaption class="border-t border-[var(--line)] px-4 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[var(--ink-muted)]">
+            Project screenshot placeholder
+          </figcaption>
+        </figure>
 
         <div class="grid gap-4 md:grid-cols-2">
           <div class="rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-raised)] p-4">
@@ -106,6 +120,38 @@ const projectLinks = (project) => {
           </span>
         </div>
 
+        <div class="mt-6 rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] p-4">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">
+            Project snapshot
+          </p>
+          <div class="mt-4 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-[1rem] border border-[var(--line)] bg-[var(--surface-panel)] p-3">
+              <p class="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--ink-muted)]">
+                Audience
+              </p>
+              <p class="mt-1.5 text-sm leading-6 text-[var(--ink-strong)]">
+                {{ primaryProject.audience }}
+              </p>
+            </div>
+            <div class="rounded-[1rem] border border-[var(--line)] bg-[var(--surface-panel)] p-3">
+              <p class="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--ink-muted)]">
+                Scope
+              </p>
+              <p class="mt-1.5 text-sm leading-6 text-[var(--ink-strong)]">
+                {{ primaryProject.scope }}
+              </p>
+            </div>
+            <div class="rounded-[1rem] border border-[var(--line)] bg-[var(--surface-panel)] p-3">
+              <p class="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--ink-muted)]">
+                Surface
+              </p>
+              <p class="mt-1.5 text-sm leading-6 text-[var(--ink-strong)]">
+                {{ primaryProject.surface }}
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div class="mt-auto flex flex-wrap gap-3 pt-8">
           <a
             v-for="item in projectLinks(primaryProject)"
@@ -128,7 +174,7 @@ const projectLinks = (project) => {
           Additional Work
         </p>
         <p class="mt-2 text-base text-[var(--ink-soft)]">
-          Dashboards, reporting, and event websites.
+          Dashboards, reporting, mobile apps, and event websites.
         </p>
       </div>
     </div>
@@ -139,7 +185,10 @@ const projectLinks = (project) => {
         :key="project.slug"
         class="group flex h-full flex-col rounded-[1.6rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] p-6 text-[var(--ink-strong)] shadow-[0_16px_38px_rgba(32,24,16,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(32,24,16,0.1)]"
       >
-        <div class="flex items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="rounded-full border border-[var(--line)] bg-[var(--surface-panel)] px-2.5 py-1 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">
+            {{ project.typeLabel }}
+          </span>
           <p class="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[var(--ink-muted)]">
             {{ project.role }}
           </p>
@@ -163,6 +212,15 @@ const projectLinks = (project) => {
           </p>
           <p class="mt-2 text-sm leading-6 text-[var(--ink-strong)]">
             {{ project.impact }}
+          </p>
+        </div>
+
+        <div class="mt-4 rounded-[1.15rem] border border-[var(--line)] bg-[var(--surface-panel)] p-4">
+          <p class="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--ink-muted)]">
+            Project lens
+          </p>
+          <p class="mt-2 text-sm leading-6 text-[var(--ink-soft)]">
+            {{ project.audience }} · {{ project.surface }}
           </p>
         </div>
 
@@ -192,7 +250,7 @@ const projectLinks = (project) => {
             v-if="!projectLinks(project).length"
             class="inline-flex items-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2.5 text-sm text-[var(--ink-muted)]"
           >
-            Private project
+            Internal work
           </span>
         </div>
       </article>

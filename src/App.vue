@@ -73,7 +73,7 @@ watch(theme, (value) => {
       @toggle-theme="toggleTheme"
     />
 
-    <main class="mx-auto flex max-w-6xl flex-col gap-6 px-4 pb-12 pt-6 sm:px-6 lg:px-10">
+    <main class="mx-auto flex max-w-6xl flex-col gap-6 px-4 pb-12 pt-28 sm:px-6 sm:pt-32 lg:px-10 lg:pt-36">
       <HeroSection :profile="profile" />
       <ProofSection :proof="proof" />
       <ProjectsSection :projects="projects" />

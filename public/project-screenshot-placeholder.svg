@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Project screenshot placeholder</title>
+  <desc id="desc">Placeholder preview frame for a featured project screenshot.</desc>
+  <defs>
+    <linearGradient id="bg" x1="120" x2="1080" y1="80" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF9F1" />
+      <stop offset="1" stop-color="#EEE4D6" />
+    </linearGradient>
+    <linearGradient id="panel" x1="176" x2="1024" y1="184" y2="616" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#F4EFE7" />
+    </linearGradient>
+    <linearGradient id="accent" x1="256" x2="944" y1="236" y2="564" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1B6E61" />
+      <stop offset="1" stop-color="#BA6F4D" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="40" fill="url(#bg)" />
+  <rect x="56" y="56" width="1088" height="688" rx="32" fill="url(#panel)" stroke="#163730" stroke-opacity=".12" />
+  <rect x="100" y="96" width="1000" height="48" rx="14" fill="#163730" opacity=".94" />
+  <rect x="132" y="110" width="140" height="20" rx="10" fill="#FFF9F1" opacity=".95" />
+  <rect x="132" y="178" width="360" height="24" rx="12" fill="#163730" opacity=".16" />
+  <rect x="132" y="220" width="540" height="18" rx="9" fill="#163730" opacity=".1" />
+  <rect x="132" y="252" width="480" height="18" rx="9" fill="#163730" opacity=".1" />
+  <rect x="132" y="284" width="420" height="18" rx="9" fill="#163730" opacity=".1" />
+  <rect x="132" y="344" width="440" height="132" rx="22" fill="#F6EFE3" stroke="#163730" stroke-opacity=".12" />
+  <rect x="608" y="344" width="420" height="132" rx="22" fill="#F6EFE3" stroke="#163730" stroke-opacity=".12" />
+  <rect x="132" y="500" width="896" height="96" rx="22" fill="url(#accent)" fill-opacity=".12" stroke="#163730" stroke-opacity=".12" />
+  <path d="M188 538h220M188 562h140M188 586h180" stroke="#163730" stroke-opacity=".22" stroke-width="12" stroke-linecap="round" />
+  <path d="M660 430c44-44 94-66 152-66s108 22 152 66" fill="none" stroke="#1B6E61" stroke-width="14" stroke-linecap="round" stroke-opacity=".76" />
+  <path d="M660 430c44 44 94 66 152 66s108-22 152-66" fill="none" stroke="#BA6F4D" stroke-width="14" stroke-linecap="round" stroke-opacity=".76" />
+  <circle cx="816" cy="430" r="20" fill="#163730" />
+  <text x="600" y="705" text-anchor="middle" fill="#163730" font-size="28" font-family="Avenir Next, Segoe UI, sans-serif" font-weight="600">
+    Replace with a project screenshot or dashboard preview
+  </text>
+</svg>
