@@ -1,102 +1,65 @@
 <script setup>
-defineProps({
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { useScrollReveal } from '../../composables/useScrollReveal'
+
+const props = defineProps({
   profile: {
     type: Object,
     required: true,
   },
 })
+
+const { el } = useScrollReveal()
+
+const isTechModalOpen = ref(false)
+const techModalEl = ref(null)
+
+const scheduleCallHref = computed(() => {
+  const href = props.profile?.contactHref
+  if (typeof href !== 'string' || !href.startsWith('mailto:')) return '#contact'
+  const hasQuery = href.includes('?')
+  const prefix = hasQuery ? '&' : '?'
+  const subject = encodeURIComponent('Schedule a call')
+  const body = encodeURIComponent('Hi Gian — I’d like to schedule a quick call. What times work for you?')
+  return `${href}${prefix}subject=${subject}&body=${body}`
+})
+
+function openTechModal() {
+  isTechModalOpen.value = true
+}
+
+function closeTechModal() {
+  isTechModalOpen.value = false
+}
+
+function onTechModalKeyDown(event) {
+  if (event.key === 'Escape') closeTechModal()
+}
+
+watch(isTechModalOpen, async (isOpen) => {
+  if (typeof document === 'undefined') return
+  document.documentElement.style.overflow = isOpen ? 'hidden' : ''
+  if (isOpen) {
+    await nextTick()
+    techModalEl.value?.focus?.()
+  }
+})
+
+onBeforeUnmount(() => {
+  if (typeof document === 'undefined') return
+  document.documentElement.style.overflow = ''
+})
 </script>
 
 <template>
   <section
+    ref="el"
     id="top"
-    class="section-shell relative grid gap-8 overflow-hidden rounded-[2rem] border border-[var(--line-strong)] bg-[var(--surface)] px-6 py-8 shadow-[0_30px_80px_rgba(35,26,18,0.08)] sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(340px,0.92fr)] lg:px-12 lg:py-12"
+    class="section-shell relative grid items-start gap-6 overflow-hidden rounded-[2rem] border border-[var(--line-strong)] bg-[var(--surface)] px-5 pt-6 pb-4 shadow-[0_30px_80px_rgba(35,26,18,0.08)] sm:px-8 sm:pt-8 sm:pb-5 md:grid-cols-[minmax(220px,0.42fr)_minmax(0,1fr)] md:gap-6 lg:grid-cols-[minmax(260px,0.42fr)_minmax(0,1fr)] lg:gap-8 lg:px-12 lg:pt-10 lg:pb-5"
   >
     <div class="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(27,110,97,0.4),transparent)]" />
 
-    <div class="relative z-10 space-y-6 lg:pr-4">
-      <div class="space-y-4">
-        <p class="text-sm font-semibold uppercase tracking-[0.32em] text-[var(--accent)]">
-          Portfolio
-        </p>
-
-        <div class="space-y-5">
-          <h1 class="max-w-[11.5ch] text-5xl leading-[0.97] font-semibold tracking-[-0.045em] text-[var(--ink-strong)] sm:text-[4.4rem] lg:text-[4.15rem]">
-            {{ profile.title }}
-          </h1>
-
-          <p class="max-w-xl pt-1 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)] sm:text-[0.92rem]">
-            {{ profile.kicker }}
-          </p>
-
-          <p class="max-w-[38rem] text-lg leading-[1.85] text-[var(--ink-soft)] sm:text-[1.1rem]">
-            {{ profile.intro }}
-          </p>
-
-          <p class="max-w-[38rem] text-base leading-8 text-[var(--ink-soft)]">
-            {{ profile.credibility }}
-          </p>
-        </div>
-      </div>
-
-      <div class="grid gap-3 rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] p-4 sm:mt-1 sm:grid-cols-2">
-        <div
-          v-for="item in profile.benchmarkStrip"
-          :key="item.label"
-          class="rounded-[1rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-3.5"
-        >
-          <p class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
-            {{ item.label }}
-          </p>
-          <p class="mt-1.5 text-lg font-medium leading-7 text-[var(--ink-strong)]">
-            {{ item.value }}
-          </p>
-          <p class="mt-1 text-sm leading-6 text-[var(--ink-muted)]">
-            {{ item.detail }}
-          </p>
-        </div>
-      </div>
-
-      <div class="flex flex-wrap gap-3 pt-1">
-        <a
-          href="#projects"
-          class="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-          style="background: var(--button-primary-bg); color: var(--button-primary-text);"
-        >
-          View Projects
-        </a>
-
-        <a
-          :href="profile.resumeUrl"
-          class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-6 py-3.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-          style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Resume
-        </a>
-
-        <a
-          :href="profile.contactHref"
-          class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-6 py-3.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-          style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
-        >
-          {{ profile.contactLabel }}
-        </a>
-      </div>
-
-      <div class="flex flex-wrap gap-3 pt-1">
-        <span
-          v-for="item in profile.focusAreas"
-          :key="item"
-          class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3.5 py-1.5 text-xs font-medium tracking-[0.01em] text-[var(--ink-muted)]"
-        >
-          {{ item }}
-        </span>
-      </div>
-    </div>
-
-    <div class="relative grid gap-4 lg:pl-2">
+    <div class="relative grid items-start gap-3">
       <div
         class="motion-card absolute -right-10 top-8 h-40 w-40 rounded-full bg-[radial-gradient(circle,_rgba(27,110,97,0.25),_transparent_70%)] blur-2xl"
       />
@@ -104,58 +67,390 @@ defineProps({
         class="motion-card absolute -left-6 bottom-4 h-32 w-32 rounded-full bg-[radial-gradient(circle,_rgba(186,111,77,0.22),_transparent_70%)] blur-2xl"
       />
 
-      <figure class="relative overflow-hidden rounded-[1.8rem] border border-[var(--line)] bg-[var(--surface-panel-strong)] p-3 shadow-[0_24px_50px_rgba(36,26,18,0.12)]">
-        <div class="relative">
+      <figure
+        class="relative mx-auto w-full max-w-[16.5rem] self-start overflow-hidden rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface-panel-strong)] shadow-[0_20px_44px_rgba(36,26,18,0.1)] sm:max-w-[17.5rem] md:mx-0 md:max-w-[15.5rem] lg:max-w-[17rem]"
+      >
+        <div class="relative aspect-[3/4] w-full overflow-hidden rounded-[1.45rem]">
           <img
             :src="profile.photo.src"
             :alt="profile.photo.alt"
-            class="aspect-[4/5] w-full rounded-[1.35rem] object-cover object-top"
+            class="absolute inset-0 h-full w-full object-cover object-[center_8%]"
+            loading="lazy"
           />
 
-          <div class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(22,55,48,0.72))]" />
+          <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),transparent_40%,rgba(0,0,0,0.22))]" />
+        </div>
+      </figure>
 
-          <div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
-            <div>
-              <p class="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/72">
-                Profile
-              </p>
-              <p class="mt-1 text-lg font-medium text-white">
-                {{ profile.name }}
-              </p>
-            </div>
+      <!-- Mini Stats Strip — fills space below photo -->
+      <div
+        class="mt-2 grid grid-cols-3 divide-x divide-[var(--line)] overflow-hidden rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel-soft)]"
+      >
+        <div class="flex flex-col items-center px-2 py-3 text-center">
+          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">7+</span>
+          <span class="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--ink-muted)]"
+            >Yrs Exp</span
+          >
+        </div>
 
-            <span class="rounded-full border border-white/18 bg-white/10 px-3 py-1.5 text-xs font-medium backdrop-blur" style="color: rgba(255,255,255,0.96);">
-              Available
-            </span>
+        <div class="flex flex-col items-center px-2 py-3 text-center">
+          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">8+</span>
+          <span class="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--ink-muted)]"
+            >Projects</span
+          >
+        </div>
+
+        <div class="flex flex-col items-center px-2 py-3 text-center">
+          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">1</span>
+          <span class="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--ink-muted)]"
+            >Published</span
+          >
+        </div>
+      </div>
+
+      <!-- Availability pill — sits below stats -->
+      <div class="mt-2 grid gap-2">
+        <div
+          class="flex items-center justify-between rounded-[1.2rem] border border-green-500/20 bg-green-500/5 px-4 py-2.5"
+        >
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 animate-pulse rounded-full bg-green-500"></span>
+            <span class="text-sm font-medium text-[var(--ink-strong)]">Open to roles</span>
           </div>
         </div>
 
-        <figcaption class="px-2 pt-3 text-sm leading-6 text-[var(--ink-muted)]">
-          {{ profile.photo.caption }}
-        </figcaption>
-      </figure>
+        <a
+          :href="scheduleCallHref"
+          class="group flex items-center justify-between rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] px-4 py-2.5 text-[var(--ink-strong)] transition hover:-translate-y-[1px] hover:border-[var(--accent)]/35 hover:bg-[var(--surface-panel)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] active:translate-y-0"
+        >
+          <div class="flex items-center gap-2">
+            <span
+              class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--accent)]"
+              aria-hidden="true"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                class="h-3.5 w-3.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M8 2v3M16 2v3" />
+                <path d="M3.5 9h17" />
+                <path d="M6 4h12a2 2 0 0 1 2 2v13.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+                <path d="M8.5 13.25h7" />
+                <path d="M8.5 16.75h7" />
+              </svg>
+            </span>
+            <span class="text-sm font-medium">Request a call</span>
+          </div>
+          <span class="text-xs font-semibold text-[var(--accent)] transition group-hover:translate-x-0.5" aria-hidden="true">
+            →
+          </span>
+        </a>
+      </div>
+    </div>
 
-      <div
-        class="relative rounded-[1.8rem] border border-[var(--line)] bg-[var(--surface-panel-strong)] p-6 shadow-[0_24px_50px_rgba(36,26,18,0.12)]"
-      >
-        <p class="text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">
-          At A Glance
+    <div class="relative z-10 flex w-full min-w-0 flex-col gap-5">
+      <div class="w-full">
+        <p class="section-label text-sm font-semibold uppercase tracking-[0.32em] text-[var(--accent)]">
+          Portfolio
         </p>
-        <div class="mt-5 space-y-3">
-          <div
-            v-for="fact in profile.credibilityPoints"
-            :key="fact.label"
-            class="rounded-[1.25rem] border border-[var(--line)] bg-[var(--surface-panel)] p-4"
-          >
-            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--ink-muted)]">
-              {{ fact.label }}
+
+        <div class="mt-3 flex w-full flex-col gap-3 sm:mt-4 sm:gap-4">
+          <div class="flex w-full flex-col gap-1 sm:gap-1.5">
+            <h1 class="w-full font-semibold leading-[1.08] tracking-[-0.04em] text-[var(--ink-strong)]">
+              <span class="block gradient-text text-[clamp(1.55rem,3.6vw,2.65rem)]">
+                {{ profile.heroTitleLines?.[0] || profile.name }}
+              </span>
+            </h1>
+
+            <p class="text-lg font-semibold leading-snug text-[var(--ink-strong)] sm:text-xl">
+              {{ profile.heroTitleLines?.[1] || 'Software Developer · Researcher' }}
             </p>
-            <p class="mt-1.5 text-lg leading-7 text-[var(--ink-strong)]">
-              {{ fact.value }}
+          </div>
+
+          <div
+            v-if="
+              profile.introParagraphs?.length ||
+              profile.intro ||
+              profile.heroSecondary ||
+              profile.heroFocusAreas?.length
+            "
+            class="flex w-full flex-col gap-3"
+          >
+            <div
+              v-if="profile.introParagraphs?.length"
+              class="flex max-w-prose flex-col gap-3 text-sm leading-6 text-[var(--ink-soft)] text-pretty hyphens-none sm:text-base sm:leading-7"
+              lang="en"
+            >
+              <p v-for="(paragraph, idx) in profile.introParagraphs" :key="idx" class="hyphens-none">
+                {{ paragraph }}
+              </p>
+            </div>
+            <p
+              v-else-if="profile.intro"
+              class="max-w-prose text-sm leading-6 text-[var(--ink-soft)] text-pretty hyphens-none sm:text-base sm:leading-7"
+              lang="en"
+            >
+              {{ profile.intro }}
+            </p>
+
+            <p
+              v-if="profile.heroSecondary"
+              class="max-w-prose hyphens-none text-pretty text-sm leading-6 text-[var(--ink-muted)] sm:leading-7"
+            >
+              {{ profile.heroSecondary }}
             </p>
           </div>
         </div>
       </div>
+
+      <div
+        v-if="profile.heroHighlights?.length"
+        class="w-full"
+      >
+        <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--ink-muted)]">At a glance</p>
+
+        <div class="mt-2 grid w-full grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-3">
+        <div
+          v-for="item in profile.heroHighlights"
+          :key="item.label"
+          class="group relative min-w-0 overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface-panel-soft)]/80 px-4 py-3 transition hover:-translate-y-0.5 hover:border-[var(--accent)]/35 sm:rounded-[1rem]"
+          :class="{
+            'cursor-pointer': item.label === 'Stack' && profile.techStack,
+          }"
+          role="button"
+          tabindex="0"
+          @click="item.label === 'Stack' && profile.techStack ? openTechModal() : null"
+          @keydown.enter.prevent="item.label === 'Stack' && profile.techStack ? openTechModal() : null"
+          @keydown.space.prevent="item.label === 'Stack' && profile.techStack ? openTechModal() : null"
+        >
+          <span
+            aria-hidden="true"
+            class="absolute inset-x-0 top-0 h-0.5 opacity-70"
+            :class="{
+              'bg-green-500/60': item.label === 'Now',
+              'bg-[var(--accent)]/55': item.label === 'Stack',
+              'bg-[var(--warm)]/55': item.label === 'Domain',
+              'bg-[var(--line)]': !['Now', 'Stack', 'Domain'].includes(item.label),
+            }"
+          />
+          <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">
+            {{ item.label }}
+          </p>
+          <p v-if="item.label === 'Now'" class="mt-1 text-sm leading-6 text-[var(--ink-strong)]">
+            {{ item.value }}<br />
+            <span class="text-[var(--ink-muted)]">{{ item.detail }}</span>
+          </p>
+          <p v-else-if="item.label === 'Stack'" class="mt-1 text-sm leading-6 text-[var(--ink-strong)]">
+            {{ item.value }}<br />
+            <span v-if="item.detail" class="text-[var(--ink-muted)]">{{ item.detail }}</span>
+            <span
+              v-if="profile.techStack"
+              class="mt-2 inline-flex items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]"
+            >
+              See all tech
+              <span aria-hidden="true">→</span>
+            </span>
+          </p>
+          <p v-else-if="item.label === 'Domain'" class="mt-1 text-sm leading-6 text-[var(--ink-strong)]">
+            {{ item.value }}<br />
+            <span v-if="item.detail" class="text-[var(--ink-muted)]">{{ item.detail }}</span>
+          </p>
+          <p v-else class="mt-1 text-xs font-medium leading-5 text-[var(--ink-strong)] [overflow-wrap:anywhere]">
+            {{ item.value }}
+          </p>
+        </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2.5">
+        <a
+          href="#projects"
+          class="btn-primary inline-flex items-center gap-2 justify-center rounded-full px-6 py-3.5 text-sm font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+        >
+          View work
+          <svg aria-hidden="true" viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
+        </a>
+
+        <a
+          :href="profile.resumeUrl"
+          class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-6 py-3.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+          style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="mr-2 h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <path d="M7 10l5 5 5-5" />
+            <path d="M12 15V3" />
+          </svg>
+          Resume
+        </a>
+
+        <a
+          v-for="link in profile.socialLinks"
+          :key="link.label"
+          :href="link.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-6 py-3.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+          style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
+        >
+          <svg
+            v-if="link.label === 'LinkedIn'"
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="mr-2 h-4 w-4"
+            fill="currentColor"
+          >
+            <path
+              d="M20.45 20.45h-3.55v-5.56c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.65H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.39-1.85 3.62 0 4.29 2.38 4.29 5.47v6.27ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.23 0Z"
+            />
+          </svg>
+          <svg
+            v-else-if="link.label === 'GitHub'"
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="mr-2 h-4 w-4"
+            fill="currentColor"
+          >
+            <path
+              d="M12 0C5.37 0 0 5.5 0 12.29c0 5.43 3.44 10.04 8.2 11.67.6.11.82-.27.82-.6 0-.29-.01-1.05-.02-2.06-3.34.75-4.04-1.66-4.04-1.66-.55-1.41-1.34-1.78-1.34-1.78-1.09-.77.08-.76.08-.76 1.2.09 1.84 1.26 1.84 1.26 1.07 1.88 2.8 1.34 3.49 1.03.11-.8.42-1.35.76-1.66-2.66-.31-5.47-1.36-5.47-6.05 0-1.34.46-2.44 1.23-3.3-.12-.31-.53-1.57.12-3.27 0 0 1.01-.33 3.3 1.26.96-.27 1.99-.41 3.01-.41 1.02 0 2.05.14 3.01.41 2.29-1.59 3.3-1.26 3.3-1.26.65 1.7.24 2.96.12 3.27.77.86 1.23 1.96 1.23 3.3 0 4.7-2.81 5.74-5.49 6.04.43.38.81 1.13.81 2.28 0 1.65-.02 2.98-.02 3.39 0 .33.22.71.82.6 4.77-1.63 8.2-6.24 8.2-11.67C24 5.5 18.63 0 12 0Z"
+            />
+          </svg>
+          {{ link.label }}
+        </a>
+      </div>
     </div>
+
+    <teleport to="body">
+      <div
+        v-if="isTechModalOpen"
+        class="fixed inset-0 z-[100] flex items-center justify-center px-4 py-6 sm:px-6"
+        @keydown="onTechModalKeyDown"
+      >
+        <button
+          type="button"
+          class="absolute inset-0 bg-black/40"
+          aria-label="Close tech stack dialog"
+          @click="closeTechModal"
+        />
+
+        <div
+          ref="techModalEl"
+          class="relative z-[101] w-full max-w-2xl overflow-hidden rounded-2xl border border-[var(--line-strong)] bg-[var(--surface)] shadow-[0_30px_80px_rgba(0,0,0,0.25)] focus:outline-none"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Tech stack"
+          tabindex="-1"
+        >
+          <div class="flex items-center justify-between gap-4 border-b border-[var(--line)] px-5 py-3.5 sm:px-6">
+            <div class="min-w-0">
+              <h3 class="text-lg font-semibold leading-none text-[var(--ink-strong)] sm:text-xl">
+                <span class="gradient-text">Tech Stack</span>
+              </h3>
+            </div>
+            <button
+              type="button"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] text-[var(--ink-strong)] transition hover:border-[var(--accent)]/35"
+              aria-label="Close"
+              @click="closeTechModal"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="max-h-[70vh] overflow-auto px-5 py-4 sm:px-6">
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div v-if="profile.techStack?.frontend?.length" class="min-w-0">
+                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Frontend</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <span
+                    v-for="item in profile.techStack.frontend"
+                    :key="`fe-${item}`"
+                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
+                  >
+                    {{ item }}
+                  </span>
+                </div>
+              </div>
+
+              <div v-if="profile.techStack?.backend?.length" class="min-w-0">
+                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Backend</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <span
+                    v-for="item in profile.techStack.backend"
+                    :key="`be-${item}`"
+                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
+                  >
+                    {{ item }}
+                  </span>
+                </div>
+              </div>
+
+              <div v-if="profile.techStack?.data?.length" class="min-w-0">
+                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Data</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <span
+                    v-for="item in profile.techStack.data"
+                    :key="`data-${item}`"
+                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
+                  >
+                    {{ item }}
+                  </span>
+                </div>
+              </div>
+
+              <div v-if="profile.techStack?.mapping?.length" class="min-w-0">
+                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Geospatial</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <span
+                    v-for="item in profile.techStack.mapping"
+                    :key="`map-${item}`"
+                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
+                  >
+                    {{ item }}
+                  </span>
+                </div>
+              </div>
+
+              <div v-if="profile.techStack?.tools?.length" class="min-w-0 sm:col-span-2">
+                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/90">Tools</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <span
+                    v-for="item in profile.techStack.tools"
+                    :key="`tools-${item}`"
+                    class="rounded-full border border-[var(--line)] bg-[var(--surface-panel-soft)] px-3 py-1 text-xs font-medium text-[var(--ink-strong)]"
+                  >
+                    {{ item }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-[var(--line)] px-5 py-4 sm:px-6">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <p class="text-xs text-[var(--ink-muted)]">
+                A curated snapshot of the technologies I use across product work.
+              </p>
+              <button
+                type="button"
+                class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-2 text-sm font-medium transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                @click="closeTechModal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </teleport>
   </section>
 </template>

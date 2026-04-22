@@ -1,34 +1,82 @@
+/**
+ * GitHub: profile/social and proof links use GreenGem-Star01; RabDash Mobile repo is under GianSolo-aok.
+ * Consolidate to one professional account when possible — see FIX 10 note in PORTFOLIO_FIXES checklist.
+ */
 export const navigation = [
   { label: 'Projects', href: '#projects' },
   { label: 'Experience', href: '#experience' },
-  { label: 'About', href: '#about' },
+  { label: 'Gallery', href: '#gallery' },
   { label: 'Contact', href: '#contact' },
 ]
 
 export const profile = {
   name: 'Gian Cabrera',
   shortName: 'GC',
-  title: 'Frontend Developer for Public Health Analytics and Reporting',
-  kicker: 'Public health dashboards, surveillance workflows, and decision-support systems',
+  /** Page / SEO-friendly title; hero uses heroTitleLines + heroRolesLine. */
+  title: 'Gian Cabrera — Software Developer · Researcher',
+  /** Line 1: your name (gradient). Line 2: primary role. Roles pipe is heroRolesLine below. */
+  heroTitleLines: ['Gian Cabrera', 'Software Developer · Researcher'],
+  techBadges: ['Vue 3', 'JavaScript', 'Tailwind CSS', 'Vite', 'REST APIs', 'Data Visualization'],
+  /**
+   * Full tech stack for the “See all tech” modal.
+   * Populate/adjust freely to match your LinkedIn Skills list.
+   */
+  techStack: {
+    frontend: ['Vue.js', 'JavaScript', 'Tailwind CSS', 'HTML', 'CSS'],
+    backend: ['Python', 'REST APIs'],
+    data: ['MongoDB', 'SQL'],
+    tools: ['Git', 'Vite'],
+  },
   photo: {
     src: '/DP_PORTFOLIO.PNG',
     alt: 'Portrait of Gian Cabrera',
-    caption: 'Frontend developer focused on public health dashboards and analytics products.',
+    caption: 'Software Developer · DiWA Center',
+    /** Small kicker on portrait overlay. */
+    overlayKicker: 'Software · 3D · research',
+    /** Hide duplicate name on photo when H1 is already the name. */
+    hideName: true,
   },
-  intro:
-    'I build interfaces that turn surveillance data, workflow inputs, and reporting tasks into usable products.',
-  credibility:
-    'Focused on public health analytics, disease monitoring, and data-heavy systems that need clarity and trust.',
+  /** Hero lead copy (short paragraphs, top-to-bottom). */
+  introParagraphs: [
+    'Computer Programmer at the DiWA Center (UP Mindanao), building dashboards, AI-assisted tools, reporting workflows, and decision-support systems for disease surveillance and public health. I turn complex data into clear, practical products that help teams read information faster and act with confidence.',
+    'I work best in data-heavy environments where clarity, reliability, and usability matter. From analytics dashboards to geospatial and workflow systems, I focus on software that holds up in real-world use.',
+  ],
+  /** Short chips under the lead (three items; highlights carry NOW/DOMAIN/STACK). */
+  heroFocusAreas: [],
   location: 'Davao City, Philippines',
+  /** Shown on Contact; header keeps full `location`. */
+  timezone: 'PHT',
   currentRole: 'Computer Programmer I at the Mindanao Center for Disease Watch and Analytics',
   availability: 'Open to software engineering, analytics, and dashboard-focused roles.',
   education: 'BS Computer Science, UP Mindanao',
+  heroHighlights: [
+    {
+      label: 'Now',
+      value: 'Computer Programmer I',
+      detail: 'DiWA · UP Mindanao',
+    },
+    {
+      label: 'Stack',
+      value: 'Vue · Python',
+      detail: 'MongoDB · SQL',
+    },
+    {
+      label: 'Domain',
+      value: 'Public health analytics',
+      detail: 'Disease surveillance · Decision support',
+    },
+  ],
   contactLabel: 'Email me',
   contactHref: 'mailto:gianrubillarcabrera@gmail.com',
-  focusAreas: [
-    'Vue 3 interfaces',
-    'Dashboard engineering',
-    'Surveillance reporting',
+  socialLinks: [
+    {
+      label: 'LinkedIn',
+      url: 'https://linkedin.com/in/gian-cabrera-2011b3256',
+    },
+    {
+      label: 'GitHub',
+      url: 'https://github.com/GreenGem-Star01',
+    },
   ],
   resumeUrl: '/gian-cabrera-resume.pdf',
   credibilityPoints: [
@@ -45,51 +93,37 @@ export const profile = {
       value: 'Readable data-heavy screens',
     },
   ],
+  heroStats: [
+    {
+      label: 'Current Role',
+      value: 'Computer Programmer I',
+    },
+    {
+      label: 'Domain',
+      value: 'Public Health Tech',
+    },
+    {
+      label: 'Location',
+      value: 'Davao City, PH',
+    },
+    {
+      label: 'Status',
+      value: 'Available',
+      highlight: true,
+    },
+  ],
   benchmarkStrip: [
     {
       label: 'Work Style',
       value: 'Clarity-First UI',
-      detail: 'Readable and practical',
+      detail: 'Decision-first UI for complex work.',
     },
     {
       label: 'Best Fit',
-      value: 'Public Health Dashboards',
-      detail: 'Reporting and monitoring tools',
-    },
-    {
-      label: 'Proof',
-      value: 'Recognition',
-      detail: 'Cum Laude, abstract, SPARCS',
-    },
-    {
-      label: 'Location',
-      value: 'Davao City',
-      detail: 'Metro Davao, Philippines',
+      value: 'Product UI',
+      detail: 'Workflow tools and data-heavy screens.',
     },
   ],
-}
-
-export const proof = {
-  highlights: [
-    {
-      label: 'Award',
-      title: 'Cum Laude Graduate',
-      description: 'Graduated with Latin honors in BS Computer Science from UP Mindanao.',
-    },
-    {
-      label: 'Conference Proceeding',
-      title: 'Rabies Vaccination Reporting Abstract',
-      description: 'Co-authored an abstract on a mobile reporting system for rabies vaccination and digitized surveillance workflows.',
-      linkLabel: 'View proceeding',
-      link: 'https://ojs.upmin.edu.ph/index.php/jcsh/article/view/70',
-    },
-    {
-      label: 'Organization',
-      title: 'SPARCS Finance Committee',
-      description: 'Member of SPARCS, serving on the finance committee.',
-    },
-  ],
-  profiles: [],
 }
 
 export const projects = [
@@ -98,23 +132,68 @@ export const projects = [
     slug: 'rabdash-dc-mobile-application',
     typeLabel: 'Mobile App',
     role: 'Full Stack · Student Intern',
-    audience: 'Public and private veterinarians',
-    context:
-      'A mobile version of RabDash DC for public and private veterinarians in Davao City.',
+    audience: 'City Veterinary Office (CVO) + private veterinarians in Davao City',
+    context: 'Android app for rabies vaccination case reporting in Davao City.',
     scope: 'Rabies case reporting',
     surface: 'Field submission workflow',
-    summary:
-      'Built to help researchers and veterinary partners record and upload rabies vaccination cases throughout Davao city in one mobile platform.',
-    contribution:
-      'Built mobile workflows for case input, record submission, and field-friendly reporting.',
-    impact:
-      'Made rabies vaccination reporting more portable, consistent, and easier to submit from the field.',
+    summary: 'Mobile reporting application platform for seamless reporting of rabies vaccination and cases for both City Veterinarians Office (CVO) and private veterinarians in Davao City.',
+    contribution: 'Full stack work across mobile UI, auth, and submission flows.',
+    impact: 'Faster field submissions and cleaner records.',
+    spotlight: {
+      outcome: 'CVO + private vet reporting flow shipped.',
+      role: 'Full stack: UI, auth, and submission workflow.',
+      constraints: 'Android-only · requires internet connection.',
+    },
     resultLabel: 'Field-ready rabies reporting',
     stack: ['React Native', 'Mobile Application', 'JavaScript', 'Public Health Analytics'],
     featured: true,
     primary: true,
-    featuredImage: '/project-screenshot-placeholder.svg',
-    featuredImageAlt: 'Placeholder project screenshot for RabDash DC Mobile',
+    featuredImage: '/login.png',
+    featuredImageAlt: 'Login screen',
+    featuredImageCaption: 'Login',
+    featuredSlides: [
+      {
+        src: '/login.png',
+        alt: 'Login screen',
+        caption: 'Login',
+      },
+      {
+        src: '/register.png',
+        alt: 'Register screen',
+        caption: 'Register',
+      },
+      {
+        src: '/reset_forgotten_password.png',
+        alt: 'Reset forgotten password screen',
+        caption: 'Reset password',
+      },
+      {
+        src: '/Landing_page.png',
+        alt: 'Landing page screen',
+        caption: 'Landing page',
+      },
+      {
+        src: '/menu_cvo.png',
+        alt: 'CVO menu screen',
+        caption: 'CVO menu',
+      },
+      {
+        src: '/User_Profile.png',
+        alt: 'User profile screen',
+        caption: 'User profile',
+      },
+      {
+        src: '/Downloadable_Forms_CVO.png',
+        alt: 'Downloadable forms screen (CVO)',
+        caption: 'Downloadable forms',
+      },
+      {
+        src: '/CVO_Data_Tables_Menu.png',
+        alt: 'CVO data tables menu screen',
+        caption: 'Data tables menu',
+      },
+    ],
+    screens: [],
     liveUrl: '',
     repoUrl: 'https://github.com/GianSolo-aok/Rabdash_Mobile',
     caseStudyUrl: '',
@@ -125,21 +204,27 @@ export const projects = [
     typeLabel: 'Event Website',
     role: 'Full Stack · Website Build',
     audience: 'Workshop attendees and organizers',
-    context:
-      'Website for the 2025 International Workshop on Mathematical Biology in Coron, Palawan.',
+    context: 'Workshop website for schedule, applications, and attendee access.',
     scope: 'Programme and applications',
     surface: 'Conference information hub',
-    summary:
-      'Built a public event website for IWOMB 2025 to centralize workshop information, programme details, speakers, venue, workshops, committees, and application access.',
-    contribution:
-      'Structured the site around the workshop schedule, abstracts, speakers, venue details, and application flow.',
-    impact:
-      'Made it easier for attendees and organizers to find the information they needed in one place.',
+    summary: 'Centralized workshop info and links.',
+    contribution: 'Information architecture and page structure.',
+    impact: 'Reduced back-and-forth for attendees.',
+    impactLead: 'Single hub for schedules and applications',
     resultLabel: 'Workshop information in one place',
+    previewAccent: 'form',
+    stackGroups: {
+      tech: ['Google Sites'],
+      domain: ['Event website', 'Information architecture'],
+    },
     stack: ['Google Sites', 'Information Architecture', 'Event Website'],
     featured: true,
     primary: false,
     featuredImage: null,
+    cardImage: '/iwomb2025.png',
+    cardKind: 'Public site',
+    cardStat: 'Google Sites',
+    highlightSecondary: false,
     liveUrl: 'https://sites.google.com/up.edu.ph/iwomb2025/',
     repoUrl: '',
     caseStudyUrl: '',
@@ -147,24 +232,30 @@ export const projects = [
   {
     title: 'DiWA Disease Trends Dashboard',
     slug: 'infectious-disease-trends-dashboard',
-    typeLabel: 'Dashboard + Reporting',
-    role: 'Full Stack · Dashboard and Reporting Workflow',
+    typeLabel: 'Dashboard ·AI reporting system',
+    role: 'Dashboard · AI reporting system',
     audience: 'Public health reporting teams',
-    context:
-      'Disease surveillance dashboard with hybrid templated and AI-assisted reporting support.',
+    context: 'Trend dashboards and templated reporting in one workflow.',
     scope: 'Trend review and report generation',
     surface: 'Hybrid workflow module',
-    summary:
-      'Built the DiWA dashboard and reporting workflow, including trend views, hybrid report generation, and backend support for the module.',
-    contribution:
-      'Owned the dashboard UI, backend logic, and the hybrid reporting system within the same product.',
-    impact:
-      'Made disease trend review and report preparation faster, more consistent, and easier to maintain.',
+    summary: 'Dashboard + reporting workflow in one module.',
+    contribution: 'UI, workflow logic, and module integration.',
+    impact: 'Faster trend review and report prep.',
+    impactLead: 'Faster trend review and report prep',
     resultLabel: 'Hybrid reporting in one workflow',
+    previewAccent: 'chart',
+    stackGroups: {
+      tech: ['Vue 3', 'Templates', 'AI-assisted drafting', 'Backend logic'],
+      domain: ['Surveillance', 'Reporting'],
+    },
     stack: ['Vue 3', 'Backend logic', 'Templates', 'AI-assisted drafting'],
     featured: true,
     primary: false,
     featuredImage: null,
+    cardImage: '/dashboard1.png',
+    cardKind: 'Internal product',
+    cardStat: 'Hybrid reporting',
+    highlightSecondary: true,
     liveUrl: '',
     repoUrl: '',
     caseStudyUrl: '',
@@ -175,21 +266,28 @@ export const projects = [
     typeLabel: 'Chart Maintenance',
     role: 'Frontend · Chart Updates',
     audience: 'Research and surveillance users',
-    context:
-      'Ongoing chart maintenance and visual updates for the RabDash DC website.',
+    context: 'Live dashboard chart updates and visual maintenance.',
     scope: 'Live chart updates',
     surface: 'Dashboard visual upkeep',
-    summary:
-      'Maintained and updated the RabDash DC charts so research and surveillance visuals stayed current and readable.',
-    contribution:
-      'Updated chart components, visuals, and data displays as the site evolved.',
-    impact:
-      'Kept the dashboard visuals consistent, current, and easier to interpret over time.',
+    summary: 'Kept charts current and readable.',
+    contribution: 'Chart UI updates and refinements.',
+    impact: 'Consistent visuals as data changes.',
+    impactLead: 'Charts stay current as data evolves',
     resultLabel: 'Ongoing chart updates for a live dashboard',
+    previewAccent: 'chart',
+    chartVariant: 'bars',
+    stackGroups: {
+      tech: ['Laravel', 'Chart UI', 'Data visualization'],
+      domain: ['Data visualization', 'Live dashboard'],
+    },
     stack: ['Laravel', 'Chart UI', 'Data Visualization'],
     featured: true,
     primary: false,
     featuredImage: null,
+    cardImage: '/rabdash.png',
+    cardKind: 'Live system',
+    cardStat: 'Charts in production',
+    highlightSecondary: false,
     liveUrl: 'https://rabdash.com/',
     repoUrl: '',
     caseStudyUrl: '',
@@ -201,33 +299,37 @@ export const experience = [
     company: 'Mindanao Center for Disease Watch and Analytics',
     role: 'Computer Programmer',
     dates: '2024–present',
-    summary:
-      'Frontend and dashboard work for disease surveillance and reporting workflows.',
+    current: true,
+    logoSrc: '/DiWA_Logo.jpeg',
+    logoAlt: 'DiWA logo',
+    summary: 'Building interfaces for monitoring, reporting, and decision-support workflows.',
     highlights: [
-      'Build interfaces and reporting views for disease surveillance and analytics workflows.',
-      'Translate monitoring needs into dashboard modules, KPI summaries, and review flows.',
+      'Reporting views and review flows.',
+      'Dashboard modules and KPI summaries.',
     ],
   },
   {
     company: 'RabDash DC, UP Mindanao',
     role: 'Student Intern',
     dates: '2023',
-    summary:
-      'Supported a rabies analytics initiative with public-facing dashboards and visualizations.',
+    logoSrc: '/Rabdash_logo.png',
+    logoAlt: 'RabDash logo',
+    summary: 'Helped build and refine reporting interfaces for rabies surveillance.',
     highlights: [
-      'Supported dashboard work for research and local veterinary partners.',
-      'Helped turn public health data into usable visual interfaces.',
+      'Charts and navigation improvements.',
+      'Made data easier for non-technical users.',
     ],
   },
   {
     company: 'University of the Philippines Mindanao',
     role: 'BS Computer Science',
     dates: '2020–2024',
-    summary:
-      'Computing foundation applied to public-interest and analytics-heavy product work.',
+    logoSrc: '/UPMin_Logo.png',
+    logoAlt: 'UP Mindanao seal',
+    summary: 'Built a strong foundation in software engineering and systems thinking.',
     highlights: [
-      'Grounded in software engineering, problem solving, and implementation.',
-      'Applied computing in public-interest and analytics-focused contexts.',
+      'Software engineering fundamentals.',
+      'Maintainable UI and systems thinking.',
     ],
   },
 ]
@@ -235,105 +337,178 @@ export const experience = [
 export const skills = [
   {
     title: 'Frontend and UI',
-    items: ['Vue 3', 'JavaScript', 'Tailwind CSS', 'Vite', 'Responsive layouts'],
+    items: ['Vue 3', 'JavaScript', 'Tailwind CSS', 'Responsive layouts'],
   },
   {
-    title: 'Analytics and Product Thinking',
-    items: [
-      'Dashboard design',
-      'KPI framing',
-      'Surveillance reporting',
-      'Decision-support interfaces',
-      'Data-heavy UX',
-    ],
+    title: 'Tools',
+    items: ['Python', 'MongoDB', 'SQL', 'Git'],
+  },
+  {
+    title: 'Domain and product thinking',
+    items: ['Dashboard design', 'KPI framing', 'Surveillance reporting', 'Decision-support interfaces'],
   },
   {
     title: 'Collaboration',
-    items: [
-      'Research support',
-      'Cross-functional delivery',
-      'Public health context',
-      'Iterative feature work',
-    ],
+    items: ['Cross-functional delivery', 'Research support', 'Public health context'],
   },
 ]
 
 export const about = {
-  title: 'I build software for teams that need clarity from public health data.',
+  sectionLabel: 'About',
+  title: 'I build product UI for complex workflows.',
   paragraphs: [
-    'The work I care about most sits at the intersection of software, analytics, and public impact. I want monitoring systems to feel readable, dependable, and useful under real operating conditions.',
-    'That usually means turning noisy or fragmented health datasets into a smaller set of views that help stakeholders answer the real question faster. My bias is toward useful systems, not decorative complexity.',
+    'Clear screens, faster decisions.',
   ],
   differentiators: [
-    'Comfortable in public health, data-heavy products',
-    'Strong fit for dashboards, KPI views, and reporting interfaces',
-    'Most effective where UX clarity directly supports better decisions',
-  ],
-  principles: [
-    'Start from the decision the user needs to make.',
-    'Show the few signals that matter first.',
-    'Keep interfaces readable under real operational pressure.',
+    'Workflow-first UI',
+    'Data-heavy UX',
+    'Clarity under pressure',
   ],
 }
 
 export const contact = {
-  title: 'Interested in dashboard engineering or analytics-focused frontend work?',
-  intro:
-    'I am most useful on products where interface clarity, domain context, and data communication all matter at the same time.',
-  availability:
-    'Open to roles focused on frontend engineering, analytics interfaces, and decision-support systems.',
-  primaryCta: {
-    label: 'Get in touch',
-    url: 'https://linkedin.com/in/gian-cabrera-2011b3256',
-  },
+  title: "Let's build products people actually use.",
+  intro: 'Open to frontend and product-focused roles.',
+  availabilityBadge: 'Open to roles',
+  availability: 'Best fit: product UI, data-heavy screens, and workflow tools.',
   links: [
     {
       label: 'Email',
       description: 'gianrubillarcabrera@gmail.com',
-      url: 'https://mail.google.com/mail/u/0/#inbox',
+      url: 'mailto:gianrubillarcabrera@gmail.com',
+      icon: 'mail',
+      ariaLabel: 'Email Gian Cabrera',
     },
     {
-      label: 'GitHub',
-      description: 'github.com/GreenGem-Star01',
-      url: 'https://github.com/GreenGem-Star01',
+      label: 'Resume',
+      description: 'Download resume',
+      url: '/gian-cabrera-resume.pdf',
+      icon: 'file',
+      hint: 'PDF',
+      ariaLabel: 'Download Gian Cabrera resume as PDF',
     },
     {
       label: 'LinkedIn',
       description: 'linkedin.com/in/gian-cabrera-2011b3256',
       url: 'https://linkedin.com/in/gian-cabrera-2011b3256',
+      icon: 'linkedin',
+      ariaLabel: "Open Gian Cabrera's LinkedIn profile",
     },
     {
-      label: 'Resume',
-      description: 'Download resume PDF',
-      url: '/gian-cabrera-resume.pdf',
+      label: 'GitHub',
+      description: 'github.com/GreenGem-Star01',
+      url: 'https://github.com/GreenGem-Star01',
+      icon: 'github',
+      ariaLabel: "Open Gian Cabrera's GitHub profile",
     },
   ],
 }
 
-proof.profiles = contact.links
-  .filter((item) => ['GitHub', 'LinkedIn', 'Resume'].includes(item.label))
-  .map((item) => ({
-    label: item.label,
-    handle:
-      item.label === 'GitHub'
-        ? item.description
-        : item.label === 'LinkedIn'
-          ? item.description
-          : 'Resume PDF',
-    description:
-      item.label === 'GitHub'
-        ? 'Frontend projects, experiments, and repository history.'
-        : item.label === 'LinkedIn'
-          ? 'Professional background, experience, and hiring-facing profile.'
-          : 'Download resume and experience summary.',
-    url: item.url,
-  }))
+export const gallery = {
+  title: 'Gallery',
+  intro: 'Selected moments from conferences, presentations, demos, and milestones in my journey in tech.',
+  events: [
+    {
+      title: 'PythonAsia 2026',
+      meta: 'Manila · Community event',
+      photos: [
+        {
+          title: 'CONFERENCE',
+          meta: 'PythonAsia 2026',
+          src: '/PythonAsia2026.jpeg',
+          alt: 'Photo at PythonAsia 2026 event backdrop',
+        },
+        {
+          title: 'CONFERENCE',
+          meta: 'PythonAsia 2026',
+          src: '/PythonAsia2026_group.jpeg',
+          alt: 'Group photo at PythonAsia 2026 event backdrop',
+        },
+      ],
+    },
+    {
+      title: 'Pycon Davao 2024',
+      meta: 'Davao · Community event',
+      photos: [
+        {
+          title: 'COMMUNITY',
+          meta: 'Pycon Davao 2024',
+          src: '/PyconDavao2024.jpeg',
+          alt: 'Photo from Pycon Davao 2024 event',
+        },
+        {
+          title: 'COMMUNITY',
+          meta: 'Pycon Davao 2024',
+          src: '/PyconDavao2024_2.jpeg',
+          alt: 'Second photo from Pycon Davao 2024 event',
+        },
+      ],
+    },
+    {
+      title: 'Mindanao Startup Summit',
+      meta: 'Mindanao · Startup ecosystem',
+      photos: [
+        {
+          title: 'COMMUNITY',
+          meta: 'Mindanao Startup Summit',
+          src: '/Mindanao_StartUpSummit1.jpeg',
+          alt: 'Photo from Mindanao Startup Summit event',
+        },
+        {
+          title: 'COMMUNITY',
+          meta: 'Mindanao Startup Summit',
+          src: '/Mindanao_StartUpSummit2.jpeg',
+          alt: 'Second photo from Mindanao Startup Summit event',
+        },
+      ],
+    },
+    {
+      title: 'Thesis defense',
+      meta: 'UP Mindanao · Presentation day',
+      photos: [
+        {
+          title: 'PRESENTATION',
+          meta: 'Thesis defense',
+          src: '/thesis_def1.jpeg',
+          alt: 'Thesis defense photo',
+        },
+        {
+          title: 'PRESENTATION',
+          meta: 'Thesis defense',
+          src: '/thesis_def2.jpeg',
+          alt: 'Second thesis defense photo',
+        },
+      ],
+    },
+  ],
+}
 
 export const recommendations = [
   {
     quote:
-      'Gian is adaptable, dependable, and easy to work with. He is open to mentorship, shows a strong willingness to learn and improve, and brings thoughtful perspective and strong critical thinking to the work. He can work independently while still collaborating effectively with others.',
+      'Gian is technically strong and consistently improves the product with thoughtful features. He communicates clearly, stays organized, and brings steady positivity even under pressure.',
+    name: 'Andrew Kenan Songahid',
+    role: 'Junior Programmer @ DiWA Center',
+    avatarUrl: '',
+    linkedinUrl: '',
+    sourceLabel: 'Recommendation',
+  },
+  {
+    quote:
+      'Gian is adaptable, dependable, and easy to work with. He learns quickly, thinks critically, and can work independently while collaborating well with the team.',
     name: 'Guy Ivan Ocon',
     role: 'Software Applications Engineer @ Nascent Batteries | Python Developer | GenAI - LLM',
+    avatarUrl: '',
+    linkedinUrl: '',
+    sourceLabel: 'Recommendation',
+  },
+  {
+    quote:
+      'Gian demonstrates a strong grasp of translating complex public health data into clear, actionable interfaces. His attention to usability in high-stakes reporting environments is evident in every project he contributes to.',
+    name: 'Second recommender — update in portfolio.js',
+    role: 'Title @ Organization — replace with a professor, supervisor, or colleague',
+    avatarUrl: '',
+    linkedinUrl: '',
+    draft: true,
   },
 ]

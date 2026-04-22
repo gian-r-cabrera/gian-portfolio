@@ -16,52 +16,65 @@ defineProps({
     type: String,
     required: true,
   },
+  activeSection: {
+    type: String,
+    default: '',
+  },
 })
 
 defineEmits(['toggle-theme'])
 </script>
 
 <template>
-  <header class="fixed inset-x-0 top-3 z-50 px-4 sm:px-6 lg:px-10">
+  <header data-site-header class="fixed inset-x-0 top-3 z-50 px-4 sm:px-6 lg:px-10">
     <div
-      class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-3 shadow-[0_24px_50px_rgba(32,24,16,0.12)] backdrop-blur md:px-6"
+      class="mx-auto flex max-w-6xl flex-col gap-3 rounded-[1.75rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-3 shadow-[0_24px_50px_rgba(32,24,16,0.12)] backdrop-blur sm:gap-4 md:flex-row md:flex-nowrap md:items-center md:gap-5 md:px-6"
     >
-      <a href="#top" class="flex items-center gap-3">
-        <span class="flex h-11 w-11 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-raised)]">
+      <div class="flex w-full items-center gap-3 md:w-auto md:flex-none">
+        <a href="#top" class="flex min-w-0 items-center gap-3">
+          <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-raised)] sm:h-11 sm:w-11">
           <img
             :src="profile.photo.src"
             :alt="profile.photo.alt"
             class="h-full w-full object-cover object-top"
           />
-        </span>
-        <div>
-          <p class="text-sm font-semibold tracking-[0.18em] text-[var(--ink-strong)] uppercase">
-            {{ profile.name }}
-          </p>
-          <p class="text-sm text-[var(--ink-muted)]">
-            {{ profile.location }}
-          </p>
-        </div>
-      </a>
-
-      <nav class="flex flex-wrap items-center justify-center gap-2 text-sm text-[var(--ink-soft)]">
-        <a
-          v-for="item in navigation"
-          :key="item.href"
-          :href="item.href"
-          class="rounded-full px-4 py-2 transition hover:bg-[var(--surface-raised)] hover:text-[var(--ink-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-        >
-          {{ item.label }}
+          </span>
+          <div class="min-w-0">
+            <p class="truncate text-sm font-semibold tracking-[0.18em] text-[var(--ink-strong)] uppercase">
+              {{ profile.name }}
+            </p>
+            <p class="hidden truncate text-sm text-[var(--ink-muted)] sm:block">
+              {{ profile.location }}
+            </p>
+          </div>
         </a>
+      </div>
+
+      <nav class="w-full overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch] md:w-auto md:flex-1 md:overflow-visible md:pb-0">
+        <div class="flex min-w-max items-center gap-1.5 text-sm text-[var(--ink-soft)] md:min-w-0 md:justify-center md:gap-2">
+          <a
+            v-for="item in navigation"
+            :key="item.href"
+            :href="item.href"
+            :class="[
+              'rounded-full px-4 py-2 transition hover:bg-[var(--surface-raised)] hover:text-[var(--ink-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]',
+              activeSection === item.href.replace('#', '')
+                ? 'bg-[var(--surface-raised)] font-semibold text-[var(--ink-strong)]'
+                : 'text-[var(--ink-soft)]',
+            ]"
+          >
+            {{ item.label }}
+          </a>
+        </div>
       </nav>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center justify-end gap-2 sm:gap-3 md:flex-none">
         <button
           type="button"
           :aria-label="themeLabel"
           :title="themeLabel"
           @click="$emit('toggle-theme')"
-          class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:h-11 sm:w-11"
         >
           <svg
             v-if="theme === 'dark'"
@@ -94,10 +107,11 @@ defineEmits(['toggle-theme'])
 
         <a
           href="#projects"
-          class="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-          style="background: var(--button-primary-bg); color: var(--button-primary-text);"
+          class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-2.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:px-5 sm:py-3"
+          style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
         >
-          Selected Work
+          <span class="hidden sm:inline">View work</span>
+          <span class="sm:hidden">Work</span>
         </a>
       </div>
     </div>
