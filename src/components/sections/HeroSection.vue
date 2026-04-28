@@ -15,6 +15,9 @@ const isTechModalOpen = ref(false)
 const techModalEl = ref(null)
 
 const scheduleCallHref = computed(() => {
+  const schedulingUrl = props.profile?.scheduleCallUrl
+  if (typeof schedulingUrl === 'string' && /^https?:\/\//i.test(schedulingUrl)) return schedulingUrl
+
   const href = props.profile?.contactHref
   if (typeof href !== 'string' || !href.startsWith('mailto:')) return '#contact'
   const hasQuery = href.includes('?')
@@ -78,6 +81,15 @@ onBeforeUnmount(() => {
             loading="lazy"
           />
 
+          <div class="pointer-events-none absolute bottom-3 right-3 z-[2]">
+            <span
+              class="inline-flex items-center gap-2 rounded-full border border-green-500/25 bg-green-500/10 px-3 py-1.5 text-[0.72rem] font-semibold text-white shadow-[0_12px_26px_rgba(0,0,0,0.18)] backdrop-blur"
+            >
+              <span class="h-2 w-2 animate-pulse rounded-full bg-green-400"></span>
+              <span>Open to roles</span>
+            </span>
+          </div>
+
           <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),transparent_40%,rgba(0,0,0,0.22))]" />
         </div>
       </figure>
@@ -87,14 +99,14 @@ onBeforeUnmount(() => {
         class="mt-2 grid grid-cols-3 divide-x divide-[var(--line)] overflow-hidden rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel-soft)]"
       >
         <div class="flex flex-col items-center px-2 py-3 text-center">
-          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">7+</span>
+          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">3+</span>
           <span class="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--ink-muted)]"
             >Yrs Exp</span
           >
         </div>
 
         <div class="flex flex-col items-center px-2 py-3 text-center">
-          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">8+</span>
+          <span class="text-2xl font-bold text-[var(--ink-strong)]" style="font-family: var(--font-heading)">7+</span>
           <span class="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--ink-muted)]"
             >Projects</span
           >
@@ -111,17 +123,37 @@ onBeforeUnmount(() => {
       <!-- Availability pill — sits below stats -->
       <div class="mt-2 grid gap-2">
         <div
-          class="flex items-center justify-between rounded-[1.2rem] border border-green-500/20 bg-green-500/5 px-4 py-2.5"
+          class="flex items-center justify-between rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] px-4 py-2.5"
         >
           <div class="flex items-center gap-2">
-            <span class="h-2 w-2 animate-pulse rounded-full bg-green-500"></span>
-            <span class="text-sm font-medium text-[var(--ink-strong)]">Open to roles</span>
+            <span
+              class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--accent)]"
+              aria-hidden="true"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                class="h-3.5 w-3.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 21s7-4.35 7-11a7 7 0 0 0-14 0c0 6.65 7 11 7 11z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+            </span>
+            <span class="text-sm font-medium text-[var(--ink-strong)]">
+              {{ profile.location || 'Davao City, Philippines' }}
+            </span>
           </div>
         </div>
 
         <a
           :href="scheduleCallHref"
           class="group flex items-center justify-between rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] px-4 py-2.5 text-[var(--ink-strong)] transition hover:-translate-y-[1px] hover:border-[var(--accent)]/35 hover:bg-[var(--surface-panel)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] active:translate-y-0"
+          :target="scheduleCallHref.startsWith('http') ? '_blank' : undefined"
+          :rel="scheduleCallHref.startsWith('http') ? 'noopener noreferrer' : undefined"
         >
           <div class="flex items-center gap-2">
             <span
@@ -144,7 +176,7 @@ onBeforeUnmount(() => {
                 <path d="M8.5 16.75h7" />
               </svg>
             </span>
-            <span class="text-sm font-medium">Request a call</span>
+            <span class="text-sm font-medium">Discuss Opportunities</span>
           </div>
           <span class="text-xs font-semibold text-[var(--accent)] transition group-hover:translate-x-0.5" aria-hidden="true">
             →

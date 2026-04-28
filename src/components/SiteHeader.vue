@@ -1,5 +1,7 @@
 <script setup>
-defineProps({
+import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
+
+const props = defineProps({
   navigation: {
     type: Array,
     required: true,
@@ -23,14 +25,43 @@ defineProps({
 })
 
 defineEmits(['toggle-theme'])
+
+const isMobileMenuOpen = ref(false)
+const mobileMenuEl = ref(null)
+
+function openMobileMenu() {
+  isMobileMenuOpen.value = true
+}
+
+function closeMobileMenu() {
+  isMobileMenuOpen.value = false
+}
+
+function onMobileMenuKeyDown(event) {
+  if (event.key === 'Escape') closeMobileMenu()
+}
+
+watch(isMobileMenuOpen, async (open) => {
+  if (typeof document === 'undefined') return
+  document.documentElement.style.overflow = open ? 'hidden' : ''
+  if (open) {
+    await nextTick()
+    mobileMenuEl.value?.focus?.()
+  }
+})
+
+onBeforeUnmount(() => {
+  if (typeof document === 'undefined') return
+  document.documentElement.style.overflow = ''
+})
 </script>
 
 <template>
   <header data-site-header class="fixed inset-x-0 top-3 z-50 px-4 sm:px-6 lg:px-10">
     <div
-      class="mx-auto flex max-w-6xl flex-col gap-3 rounded-[1.75rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-3 shadow-[0_24px_50px_rgba(32,24,16,0.12)] backdrop-blur sm:gap-4 md:flex-row md:flex-nowrap md:items-center md:gap-5 md:px-6"
+      class="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-[1.75rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-3 shadow-[0_24px_50px_rgba(32,24,16,0.12)] backdrop-blur md:flex-row md:flex-nowrap md:gap-5 md:px-6"
     >
-      <div class="flex w-full items-center gap-3 md:w-auto md:flex-none">
+      <div class="flex min-w-0 flex-1 items-center gap-3 md:flex-none md:flex-initial">
         <a href="#top" class="flex min-w-0 items-center gap-3">
           <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-raised)] sm:h-11 sm:w-11">
           <img
@@ -50,7 +81,7 @@ defineEmits(['toggle-theme'])
         </a>
       </div>
 
-      <nav class="w-full overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch] md:w-auto md:flex-1 md:overflow-visible md:pb-0">
+      <nav class="hidden w-full overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch] md:block md:w-auto md:flex-1 md:overflow-visible md:pb-0">
         <div class="flex min-w-max items-center gap-1.5 text-sm text-[var(--ink-soft)] md:min-w-0 md:justify-center md:gap-2">
           <a
             v-for="item in navigation"
@@ -71,10 +102,22 @@ defineEmits(['toggle-theme'])
       <div class="flex items-center justify-end gap-2 sm:gap-3 md:flex-none">
         <button
           type="button"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:h-11 sm:w-11 md:hidden"
+          aria-label="Open menu"
+          @click="openMobileMenu"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16" />
+            <path d="M4 12h16" />
+            <path d="M4 17h16" />
+          </svg>
+        </button>
+        <button
+          type="button"
           :aria-label="themeLabel"
           :title="themeLabel"
           @click="$emit('toggle-theme')"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:h-11 sm:w-11"
+          class="hidden h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:h-11 sm:w-11 md:inline-flex"
         >
           <svg
             v-if="theme === 'dark'"
@@ -107,13 +150,91 @@ defineEmits(['toggle-theme'])
 
         <a
           href="#projects"
-          class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-2.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:px-5 sm:py-3"
+          class="hidden items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-2.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:px-5 sm:py-3 md:inline-flex"
           style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
+          aria-label="View work"
         >
           <span class="hidden sm:inline">View work</span>
-          <span class="sm:hidden">Work</span>
+          <span class="inline sm:hidden" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 7h16" />
+              <path d="M4 12h16" />
+              <path d="M4 17h10" />
+            </svg>
+          </span>
         </a>
       </div>
     </div>
+
+    <Teleport to="body">
+      <div
+        v-if="isMobileMenuOpen"
+        class="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm md:hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        @click.self="closeMobileMenu"
+        @keydown="onMobileMenuKeyDown"
+      >
+        <div
+          ref="mobileMenuEl"
+          tabindex="-1"
+          class="mx-auto mt-4 w-[min(96vw,28rem)] rounded-[1.6rem] border border-[var(--line)] bg-[var(--surface)] shadow-[0_28px_80px_rgba(0,0,0,0.28)] focus:outline-none"
+        >
+          <div class="flex items-center justify-between gap-3 border-b border-[var(--line)] px-5 py-4">
+            <p class="text-sm font-semibold tracking-[0.18em] uppercase text-[var(--ink-strong)]">
+              Menu
+            </p>
+            <button
+              type="button"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--ink-strong)] transition hover:border-[var(--line-strong)] hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              aria-label="Close menu"
+              @click="closeMobileMenu"
+            >
+              ✕
+            </button>
+          </div>
+
+          <nav class="p-3">
+            <a
+              v-for="item in navigation"
+              :key="`m-${item.href}`"
+              :href="item.href"
+              class="flex items-center justify-between rounded-[1.1rem] px-4 py-3 text-base font-medium text-[var(--ink-strong)] transition hover:bg-[var(--surface-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              @click="closeMobileMenu"
+            >
+              <span>{{ item.label }}</span>
+              <span class="text-[var(--ink-muted)]" aria-hidden="true">→</span>
+            </a>
+          </nav>
+
+          <div class="flex flex-col gap-2 border-t border-[var(--line)] p-4">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-3 text-sm font-medium transition hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
+              @click="$emit('toggle-theme')"
+            >
+              {{ themeLabel }}
+            </button>
+            <a
+              href="#projects"
+              class="btn-primary inline-flex items-center justify-center rounded-full px-4 py-3 text-sm font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              @click="closeMobileMenu"
+            >
+              View work
+            </a>
+            <a
+              href="#contact"
+              class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-3 text-sm font-medium transition hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
+              @click="closeMobileMenu"
+            >
+              Contact
+            </a>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </header>
 </template>

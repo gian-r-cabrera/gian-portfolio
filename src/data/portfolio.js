@@ -68,6 +68,8 @@ export const profile = {
   ],
   contactLabel: 'Email me',
   contactHref: 'mailto:gianrubillarcabrera@gmail.com',
+  scheduleCallUrl: 'https://calendly.com/gianrubillarcabrera/30min',
+  resumeUrl: '/gian-cabrera-resume.pdf',
   socialLinks: [
     {
       label: 'LinkedIn',

@@ -15,7 +15,16 @@ const props = defineProps({
 
 const { el } = useScrollReveal()
 
-const safeLinks = computed(() => (Array.isArray(props.contact?.links) ? props.contact.links : []).filter(Boolean))
+const safeLinks = computed(() => {
+  const raw = Array.isArray(props.contact?.links) ? props.contact.links : []
+  return raw
+    .filter(Boolean)
+    .map((item) => {
+      if (item?.label !== 'Resume') return item
+      const url = props.profile?.resumeUrl || item?.url
+      return { ...item, url }
+    })
+})
 
 const emailAddress = computed(() => {
   const mail = props.contact.links?.find((l) => l.label === 'Email')
