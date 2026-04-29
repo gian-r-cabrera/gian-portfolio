@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 
 const props = defineProps({
   navigation: {
@@ -28,6 +28,15 @@ defineEmits(['toggle-theme'])
 
 const isMobileMenuOpen = ref(false)
 const mobileMenuEl = ref(null)
+const scheduleCallHref = computed(() => {
+  const schedulingUrl = props.profile?.scheduleCallUrl
+  if (typeof schedulingUrl === 'string' && /^https?:\/\//i.test(schedulingUrl)) return schedulingUrl
+
+  const mailHref = props.profile?.contactHref
+  if (typeof mailHref === 'string' && mailHref.startsWith('mailto:')) return mailHref
+
+  return '#contact'
+})
 
 function openMobileMenu() {
   isMobileMenuOpen.value = true
@@ -65,9 +74,13 @@ onBeforeUnmount(() => {
         <a href="#top" class="flex min-w-0 items-center gap-3">
           <span class="flex h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-raised)] sm:h-11 sm:w-11">
           <img
-            :src="profile.photo.src"
+            :src="profile.photo.fallbackSrc || profile.photo.src"
+            :srcset="profile.photo.srcSet || undefined"
+            :sizes="'(max-width: 639px) 40px, 44px'"
             :alt="profile.photo.alt"
             class="h-full w-full object-cover object-top"
+            decoding="async"
+            fetchpriority="high"
           />
           </span>
           <div class="min-w-0">
@@ -90,7 +103,7 @@ onBeforeUnmount(() => {
             :class="[
               'rounded-full px-4 py-2 transition hover:bg-[var(--surface-raised)] hover:text-[var(--ink-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]',
               activeSection === item.href.replace('#', '')
-                ? 'bg-[var(--surface-raised)] font-semibold text-[var(--ink-strong)]'
+                ? 'font-semibold text-[var(--ink-strong)] ring-1 ring-[var(--accent)]/45 bg-[color-mix(in_oklab,var(--accent)_18%,var(--surface-raised))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
                 : 'text-[var(--ink-soft)]',
             ]"
           >
@@ -148,21 +161,6 @@ onBeforeUnmount(() => {
           </svg>
         </button>
 
-        <a
-          href="#projects"
-          class="hidden items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-2.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:px-5 sm:py-3 md:inline-flex"
-          style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
-          aria-label="View work"
-        >
-          <span class="hidden sm:inline">View work</span>
-          <span class="inline sm:hidden" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 7h16" />
-              <path d="M4 12h16" />
-              <path d="M4 17h10" />
-            </svg>
-          </span>
-        </a>
       </div>
     </div>
 
@@ -217,21 +215,6 @@ onBeforeUnmount(() => {
             >
               {{ themeLabel }}
             </button>
-            <a
-              href="#projects"
-              class="btn-primary inline-flex items-center justify-center rounded-full px-4 py-3 text-sm font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-              @click="closeMobileMenu"
-            >
-              View work
-            </a>
-            <a
-              href="#contact"
-              class="inline-flex items-center justify-center rounded-full border border-[var(--line-strong)] px-4 py-3 text-sm font-medium transition hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-              style="background: var(--button-secondary-bg); color: var(--button-secondary-text);"
-              @click="closeMobileMenu"
-            >
-              Contact
-            </a>
           </div>
         </div>
       </div>

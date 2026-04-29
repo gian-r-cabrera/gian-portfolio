@@ -75,10 +75,14 @@ onBeforeUnmount(() => {
       >
         <div class="relative aspect-[3/4] w-full overflow-hidden rounded-[1.45rem]">
           <img
-            :src="profile.photo.src"
+            :src="profile.photo.fallbackSrc || profile.photo.src"
+            :srcset="profile.photo.srcSet || undefined"
+            :sizes="profile.photo.sizes || undefined"
             :alt="profile.photo.alt"
             class="absolute inset-0 h-full w-full object-cover object-[center_8%]"
             loading="lazy"
+            decoding="async"
+            fetchpriority="high"
           />
 
           <div class="pointer-events-none absolute bottom-3 right-3 z-[2]">
@@ -151,13 +155,13 @@ onBeforeUnmount(() => {
 
         <a
           :href="scheduleCallHref"
-          class="group flex items-center justify-between rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-panel-soft)] px-4 py-2.5 text-[var(--ink-strong)] transition hover:-translate-y-[1px] hover:border-[var(--accent)]/35 hover:bg-[var(--surface-panel)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] active:translate-y-0"
+          class="group flex items-center rounded-[1.2rem] border border-[var(--accent)]/28 bg-[color-mix(in_oklab,var(--accent)_10%,var(--surface-panel-soft))] px-4 py-2.5 text-[var(--ink-strong)] transition hover:-translate-y-[1px] hover:border-[var(--accent)]/45 hover:bg-[color-mix(in_oklab,var(--accent)_14%,var(--surface-panel))] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] active:translate-y-0"
           :target="scheduleCallHref.startsWith('http') ? '_blank' : undefined"
           :rel="scheduleCallHref.startsWith('http') ? 'noopener noreferrer' : undefined"
         >
           <div class="flex items-center gap-2">
             <span
-              class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-raised)] text-[var(--accent)]"
+              class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--accent)]/35 bg-[var(--surface-raised)] text-[var(--accent)]"
               aria-hidden="true"
             >
               <svg
@@ -176,11 +180,8 @@ onBeforeUnmount(() => {
                 <path d="M8.5 16.75h7" />
               </svg>
             </span>
-            <span class="text-sm font-medium">Discuss Opportunities</span>
+            <span class="text-sm font-medium text-[var(--accent)]">Discuss opportunities</span>
           </div>
-          <span class="text-xs font-semibold text-[var(--accent)] transition group-hover:translate-x-0.5" aria-hidden="true">
-            →
-          </span>
         </a>
       </div>
     </div>

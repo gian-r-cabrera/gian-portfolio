@@ -29,6 +29,9 @@ export const profile = {
   },
   photo: {
     src: '/DP_PORTFOLIO.PNG',
+    fallbackSrc: '/DP_PORTFOLIO-1200.jpg',
+    srcSet: '/DP_PORTFOLIO-800.jpg 533w, /DP_PORTFOLIO-1200.jpg 800w, /DP_PORTFOLIO-1600.jpg 1066w',
+    sizes: '(max-width: 640px) 280px, (max-width: 1024px) 248px, 272px',
     alt: 'Portrait of Gian Cabrera',
     caption: 'Software Developer · DiWA Center',
     /** Small kicker on portrait overlay. */
@@ -370,7 +373,7 @@ export const about = {
 
 export const contact = {
   title: "Let's build products people actually use.",
-  intro: 'Open to frontend and product-focused roles.',
+  intro: 'Open to frontend and product-focused roles in analytics, dashboards, and workflow systems.',
   availabilityBadge: 'Open to roles',
   availability: 'Best fit: product UI, data-heavy screens, and workflow tools.',
   links: [
@@ -382,8 +385,15 @@ export const contact = {
       ariaLabel: 'Email Gian Cabrera',
     },
     {
+      label: 'Book a call',
+      description: 'calendly.com/gianrubillarcabrera/30min',
+      url: 'https://calendly.com/gianrubillarcabrera/30min',
+      icon: 'calendar',
+      ariaLabel: 'Book a call with Gian Cabrera on Calendly',
+    },
+    {
       label: 'Resume',
-      description: 'Download resume',
+      description: 'Download resume PDF',
       url: '/gian-cabrera-resume.pdf',
       icon: 'file',
       hint: 'PDF',
