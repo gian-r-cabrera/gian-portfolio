@@ -5,6 +5,7 @@
 export const navigation = [
   { label: 'Projects', href: '#projects' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Recommendations', href: '#recommendations' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -41,7 +42,7 @@ export const profile = {
   },
   /** Hero lead copy (short paragraphs, top-to-bottom). */
   introParagraphs: [
-    'Computer Programmer at the DiWA Center (UP Mindanao), building dashboards, AI-assisted tools, reporting workflows, and decision-support systems for disease surveillance and public health. I turn complex data into clear, practical products that help teams read information faster and act with confidence.',
+    'Junior Programmer at the DiWA Center (UP Mindanao), building dashboards, reporting workflows, and decision-support tools for disease surveillance and public health. I turn complex data into clear, practical products that help teams read information faster and act with confidence.',
     'I work best in data-heavy environments where clarity, reliability, and usability matter. From analytics dashboards to geospatial and workflow systems, I focus on software that holds up in real-world use.',
   ],
   /** Short chips under the lead (three items; highlights carry NOW/DOMAIN/STACK). */
@@ -49,13 +50,13 @@ export const profile = {
   location: 'Davao City, Philippines',
   /** Shown on Contact; header keeps full `location`. */
   timezone: 'PHT',
-  currentRole: 'Computer Programmer I at the Mindanao Center for Disease Watch and Analytics',
+  currentRole: 'Junior Programmer at the Mindanao Center for Disease Watch and Analytics',
   availability: 'Open to software engineering, analytics, and dashboard-focused roles.',
   education: 'BS Computer Science, UP Mindanao',
   heroHighlights: [
     {
       label: 'Now',
-      value: 'Computer Programmer I',
+      value: 'Junior Programmer',
       detail: 'DiWA · UP Mindanao',
     },
     {
@@ -87,7 +88,7 @@ export const profile = {
   credibilityPoints: [
     {
       label: 'Current role',
-      value: 'Computer Programmer I',
+      value: 'Junior Programmer',
     },
     {
       label: 'Domain fit',
@@ -101,7 +102,7 @@ export const profile = {
   heroStats: [
     {
       label: 'Current Role',
-      value: 'Computer Programmer I',
+      value: 'Junior Programmer',
     },
     {
       label: 'Domain',
@@ -302,12 +303,28 @@ export const projects = [
 export const experience = [
   {
     company: 'Mindanao Center for Disease Watch and Analytics',
-    role: 'Computer Programmer',
-    dates: '2024–present',
+    companyShort: 'DiWA Center',
+    role: 'Junior Programmer',
+    dates: 'Jun 2026–present',
     current: true,
     logoSrc: '/DiWA_Logo.jpeg',
     logoAlt: 'DiWA logo',
-    summary: 'Building interfaces for monitoring, reporting, and decision-support workflows.',
+    summary:
+      'Tasked in planning and Enhancing the RabDash DC and other rabies related projects under DiWA, with ongoing DiWA Web App support.',
+    highlights: [
+      'RabDash DC rabies charts, reporting flows, and field-ready interfaces.',
+      'Dashboard modules and reporting views on DiWA Web App.',
+    ],
+  },
+  {
+    company: 'Mindanao Center for Disease Watch and Analytics',
+    companyShort: 'DiWA Center',
+    role: 'Computer Programmer',
+    dates: '2024–May 2026',
+    current: false,
+    logoSrc: '/DiWA_Logo.jpeg',
+    logoAlt: 'DiWA logo',
+    summary: 'Built monitoring, reporting, and decision-support interfaces for disease surveillance workflows.',
     highlights: [
       'Reporting views and review flows.',
       'Dashboard modules and KPI summaries.',
@@ -316,10 +333,10 @@ export const experience = [
   {
     company: 'RabDash DC, UP Mindanao',
     role: 'Student Intern',
-    dates: '2023',
+    dates: '2023–2024',
     logoSrc: '/Rabdash_logo.png',
     logoAlt: 'RabDash logo',
-    summary: 'Helped build and refine reporting interfaces for rabies surveillance.',
+    summary: 'Built reporting interfaces for Davao City rabies surveillance.',
     highlights: [
       'Charts and navigation improvements.',
       'Made data easier for non-technical users.',
@@ -495,32 +512,61 @@ export const gallery = {
   ],
 }
 
+export const recommendationsMeta = {
+  intro: 'Short notes from people I’ve worked and studied with.',
+  linkedinReceivedUrl:
+    'https://www.linkedin.com/in/gian-cabrera-2011b3256/details/recommendations/?detailScreenTabIndex=0',
+}
+
 export const recommendations = [
   {
     quote:
-      'Gian is technically strong and consistently improves the product with thoughtful features. He communicates clearly, stays organized, and brings steady positivity even under pressure.',
+      'I’ve had the pleasure of working with Gian at the Mindanao Center for Disease Watch and Analytics (DiWA Center) for more than a year now, where he is a Programmer on our Technological Development Team supporting the DiWA Web App. He has shown strong technical ability, especially in developing dashboards and contributing thoughtful features and ideas that help improve the application. What makes Gian especially valuable, however, is not only his technical competence but also his clear communication, organized approach to work, and steady positivity even during demanding situations. He is supportive of his teammates and brings an encouraging, optimistic presence to the center. Gian continues to be an important member of our team, and I truly appreciate the opportunity to work with him.',
     name: 'Andrew Kenan Songahid',
     role: 'Junior Programmer @ DiWA Center',
-    avatarUrl: '',
-    linkedinUrl: '',
+    relationship: 'Colleague · DiWA',
+    sourceDate: 'Apr 2026',
     sourceLabel: 'Recommendation',
+    avatarUrl: '/recommendations/andrew-kenan-songahid-192.jpeg',
+    avatarSrcSet:
+      '/recommendations/andrew-kenan-songahid-96.jpeg 1x, /recommendations/andrew-kenan-songahid-192.jpeg 2x',
+    linkedinUrl: 'https://www.linkedin.com/in/andrew-kenan-songahid-9ab921285',
   },
   {
     quote:
-      'Gian is adaptable, dependable, and easy to work with. He learns quickly, thinks critically, and can work independently while collaborating well with the team.',
+      'I am pleased to recommend Gian Cabrera, my coworker at the DiWA Center, who has consistently shown himself to be adaptable, dependable, and easy to work with. He is highly open to mentorship and demonstrates a strong willingness to learn, grow, and improve in his work. Gian also brings thoughtful perspectives to discussions and approaches tasks with strong critical thinking and sound judgment. What stands out most is his ability to work independently while still collaborating effectively with others. I am confident that he will be a valuable asset in any team or organization he joins.',
     name: 'Guy Ivan Ocon',
-    role: 'Software Applications Engineer @ Nascent Batteries | Python Developer | GenAI - LLM',
-    avatarUrl: '',
-    linkedinUrl: '',
+    role: 'Software Applications Engineer @ Nascent Batteries',
+    relationship: 'Colleague · DiWA',
+    sourceDate: 'Apr 2026',
     sourceLabel: 'Recommendation',
+    avatarUrl: '/recommendations/guy-ivan-ocon-192.jpeg',
+    avatarSrcSet: '/recommendations/guy-ivan-ocon-96.jpeg 1x, /recommendations/guy-ivan-ocon-192.jpeg 2x',
+    linkedinUrl: 'https://www.linkedin.com/in/guyivanocon',
   },
   {
     quote:
-      'Gian demonstrates a strong grasp of translating complex public health data into clear, actionable interfaces. His attention to usability in high-stakes reporting environments is evident in every project he contributes to.',
-    name: 'Second recommender — update in portfolio.js',
-    role: 'Title @ Organization — replace with a professor, supervisor, or colleague',
-    avatarUrl: '',
-    linkedinUrl: '',
-    draft: true,
+      'I’ve known Gian since our college years, and his professional growth has been impressive. He is remarkably resilient; he approaches complex challenges with a persistent, solution-oriented mindset and a refusal to give up until the job is done. This tenacity is matched by his natural ability to collaborate. Even during intense academic or personal projects, Gian maintained his composure and stayed focused, often acting as a steadying influence on the group. With his dual expertise in software and hardware development, Gian is a versatile asset to any team. He is a high-caliber professional who elevates the work of those around him, and I recommend him to any organization looking for someone dedicated and technically skilled.',
+    name: 'Harold Clyde Valiente',
+    role: 'Computer Programmer @ UP Mindanao',
+    relationship: 'UP Mindanao · colleague',
+    sourceDate: 'Jun 2026',
+    sourceLabel: 'Recommendation',
+    avatarUrl: '/recommendations/harold-clyde-valiente-192.jpg',
+    avatarSrcSet:
+      '/recommendations/harold-clyde-valiente-96.jpg 1x, /recommendations/harold-clyde-valiente-192.jpg 2x',
+    linkedinUrl: 'https://www.linkedin.com/in/harold-clyde-valiente-36b178219',
+  },
+  {
+    quote:
+      'I’ve known Gian as both a classmate and roommate at UP Mindanao. He consistently delivers quality work, learns new technologies quickly, and approaches every task with professionalism and integrity. Gian is dependable, adaptable, and someone I would confidently recommend for any team looking for a strong contributor and lifelong learner.',
+    name: 'Francis Celeste',
+    role: 'BS Computer Science, UP Mindanao',
+    relationship: 'UP Mindanao · classmate',
+    sourceDate: 'Jun 2026',
+    sourceLabel: 'Recommendation',
+    avatarUrl: '/recommendations/francis-celeste-192.jpg',
+    avatarSrcSet: '/recommendations/francis-celeste-96.jpg 1x, /recommendations/francis-celeste-192.jpg 2x',
+    linkedinUrl: 'https://www.linkedin.com/in/feceleste',
   },
 ]

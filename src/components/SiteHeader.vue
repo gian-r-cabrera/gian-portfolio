@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
 <template>
   <header data-site-header class="fixed inset-x-0 top-3 z-50 px-4 sm:px-6 lg:px-10">
     <div
-      class="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-[1.75rem] border border-[var(--line)] bg-[var(--surface-panel)] px-4 py-3 shadow-[0_24px_50px_rgba(32,24,16,0.12)] backdrop-blur md:flex-row md:flex-nowrap md:gap-5 md:px-6"
+      class="site-header-bar mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-[1.75rem] border px-4 py-3 md:flex-row md:flex-nowrap md:gap-5 md:px-6"
     >
       <div class="flex min-w-0 flex-1 items-center gap-3 md:flex-none md:flex-initial">
         <a href="#top" class="flex min-w-0 items-center gap-3">

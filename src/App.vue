@@ -16,6 +16,7 @@ import {
   profile,
   projects,
   recommendations,
+  recommendationsMeta,
   skills,
 } from './data/portfolio'
 
@@ -23,7 +24,14 @@ const year = new Date().getFullYear()
 const theme = ref('light')
 const showScrollTop = ref(false)
 
-const { activeSection } = useActiveSection(['top', 'projects', 'experience', 'gallery', 'contact'])
+const { activeSection } = useActiveSection([
+  'top',
+  'projects',
+  'experience',
+  'recommendations',
+  'gallery',
+  'contact',
+])
 
 const themeLabel = computed(() =>
   theme.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode',
@@ -130,7 +138,7 @@ watch(theme, (value) => {
 
       <ProjectsSection :projects="projects" />
       <ExperienceSection :experience="experience" :skills="skills" />
-      <RecommendationsSection :recommendations="recommendations" />
+      <RecommendationsSection :recommendations="recommendations" :meta="recommendationsMeta" />
       <GallerySection :gallery="gallery" />
       <ContactSection :contact="contact" :profile="profile" />
     </main>

@@ -1,36 +1,38 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 
+const getScrollOffset = () => {
+  const header = document.querySelector('[data-site-header]')
+  const height = header?.getBoundingClientRect().height ?? 0
+  return Math.max(100, Math.round(height + 24))
+}
+
 export function useActiveSection(sectionIds) {
-  const activeSection = ref('')
-  let observer = null
+  const activeSection = ref(sectionIds[0] || '')
+
+  const updateActiveSection = () => {
+    const position = window.scrollY + getScrollOffset()
+    let current = sectionIds[0]
+
+    for (const id of sectionIds) {
+      const el = document.getElementById(id)
+      if (!el) continue
+      if (el.offsetTop <= position) {
+        current = id
+      }
+    }
+
+    activeSection.value = current
+  }
 
   onMounted(() => {
-    const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean)
-
-    if (!sections.length) return
-
-    observer = new IntersectionObserver(
-      (entries) => {
-        const intersecting = entries.filter((entry) => entry.isIntersecting)
-        if (!intersecting.length) return
-
-        const best = intersecting.reduce((a, b) => {
-          if (b.intersectionRatio !== a.intersectionRatio) {
-            return b.intersectionRatio > a.intersectionRatio ? b : a
-          }
-          return a.boundingClientRect.top <= b.boundingClientRect.top ? a : b
-        })
-
-        activeSection.value = best.target.id
-      },
-      { rootMargin: '-15% 0px -65% 0px', threshold: 0 },
-    )
-
-    sections.forEach((section) => observer.observe(section))
+    updateActiveSection()
+    window.addEventListener('scroll', updateActiveSection, { passive: true })
+    window.addEventListener('resize', updateActiveSection, { passive: true })
   })
 
   onUnmounted(() => {
-    if (observer) observer.disconnect()
+    window.removeEventListener('scroll', updateActiveSection)
+    window.removeEventListener('resize', updateActiveSection)
   })
 
   return { activeSection }
