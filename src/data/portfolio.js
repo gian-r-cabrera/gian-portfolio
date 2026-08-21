@@ -81,7 +81,7 @@ export const profile = {
     },
     {
       label: 'GitHub',
-      url: 'https://github.com/GreenGem-Star01',
+      url: 'https://github.com/gian-r-cabrera',
     },
   ],
   resumeUrl: '/gian-cabrera-resume.pdf',
@@ -425,8 +425,8 @@ export const contact = {
     },
     {
       label: 'GitHub',
-      description: 'github.com/GreenGem-Star01',
-      url: 'https://github.com/GreenGem-Star01',
+      description: 'github.com/gian-r-cabrera',
+      url: 'https://github.com/gian-r-cabrera',
       icon: 'github',
       ariaLabel: "Open Gian Cabrera's GitHub profile",
     },
